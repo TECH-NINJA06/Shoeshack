@@ -1,11 +1,9 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 import dbConnect from "./db/index.js";
 import app from './app.js';
 import { port } from './constants.js';
 
-dotenv.config({
-    path: './env'
-})
+dotenv.config();
 
 dbConnect()
 .then(() => {
