@@ -1,10 +1,15 @@
-import Product from '../models/products.models'
+// import Product from '../models/products.models'
 
-function addProducts(products) {
-  return Product.insertMany(products);
-}
+// async function productService(productData) {
+//   try {
+//     const newProduct = new Product(productData);
 
-// Export the function
-module.exports = {
-  addProducts: addProducts
-};
+//     const product = await Product.save(newProduct);
+
+//     return product;
+//   } catch (error) {
+//     console.log('Error saving product')
+//   }
+// }
+
+// export default productService;
