@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -23,11 +24,17 @@ const Navbar = () => {
             </div>
             
             <div className="search-icon w-9 h-9 rounded bg-orange-500 ml-2 flex justify-center items-center">
-            <FaSearch className="text-black" />
+            <FaSearch className="text-white" />
             </div>
           </div>
         </div>
-        <div className="h-full w-20 bg-black flex justify-end items-end"></div>
+        <div className="h-full w-24 flex justify-end items-end">
+          <div className="h-full w-full flex justify-center items-center">
+            <div className="h-10 w-full bg-orange-500 rounded">
+              <Link href='/login' className="h-full w-full flex items-center justify-center">LOGIN</Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
