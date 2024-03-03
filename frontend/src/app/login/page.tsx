@@ -4,7 +4,7 @@ import { useSession, signIn } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
 
-const page = () => {
+function LoginPage () {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,7 +16,7 @@ const page = () => {
     <div className=" h-[100vh] w-[100vw] relative">
       <img
         src="./authBG.jpg"
-        alt=""
+        alt="bgimage"
         className="h-full -z-50 grayscale w-full"
       />
       <div className=" h-[80%] w-[30%] z-50  flex justify-center items-center absolute top-[5%] left-[35%] rounded-md backdrop-blur-[4px] border border-white">
@@ -31,7 +31,6 @@ const page = () => {
                 <input
                   type="text"
                   name="username"
-                  id=""
                   className=" rounded-r-md bg-transparent text-black dark:text-white placeholder:text-black dark:placeholder:text-white"
                   placeholder="Enter your Username"
                   onChange={(e) => {
@@ -44,7 +43,6 @@ const page = () => {
                 <input
                   type="password"
                   name="password"
-                  id=""
                   className=" rounded-r-md bg-transparent text-black dark:text-white placeholder:text-black dark:placeholder:text-white"
                   placeholder="Enter your Password"
                   onChange={(e) => {
@@ -84,4 +82,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LoginPage;

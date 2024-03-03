@@ -15,7 +15,6 @@ const registerUser = async (req, res) => {
     if (!password) {
       throw new Error("Password is required");
     }
-
     // Check if user already exists
     const existedUser = await User.findOne({ email });
     if (existedUser) {

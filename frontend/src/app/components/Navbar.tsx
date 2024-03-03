@@ -8,7 +8,7 @@ const Navbar = () => {
   const [search, setSearch] = useState('');
 
   const handleSearch = () => {
-
+    console.log("search");
   }
 
   return (
