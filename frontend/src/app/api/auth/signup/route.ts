@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { fullName, email, password } = body;
+    const { fullName, email, password, avatar } = body;
     if (!fullName || !email || !password) {
       return NextResponse.json(
         { message: "All fields are required" },
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcryptjs.hash(password, 10);
 
     const newUser = await db.user.create({
-      data: { fullName, email, password: hashedPassword },
+      data: { fullName, email, password: hashedPassword, avatar },
     });
 
     return NextResponse.json({ user: newUser, message: "User created successfully"}, { status: 200 });

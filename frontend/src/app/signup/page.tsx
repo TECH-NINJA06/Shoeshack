@@ -9,7 +9,7 @@ function LoginPage () {
   const [password, setPassword] = useState("");
 
   const handleSubmit = () => {
-    console.log(`"email" ${email}, "password" ${password}`);
+    console.log(`"fullName" ${fullName}, "email" ${email}, "password" ${password}`);
   };
 
   return (
@@ -22,10 +22,22 @@ function LoginPage () {
       <div className=" h-[80%] w-[30%] z-50  flex justify-center items-center absolute top-[5%] left-[35%] rounded-md backdrop-blur-[4px] border border-white">
         <div className="h-full w-full mx-5 flex flex-col justify-evenly">
           <div className=" h-20 w-full flex justify-center items-center font-semibold text-3xl text-[#0B1215]">
-            <h1>LOGIN</h1>
+            <h1>Register</h1>
           </div>
           <div className="h-[75%] w-full bg-white rounded">
             <div className="flex items-center flex-col pap-5 mt-7 justify-between">
+            <div className="flex justify-center items-center gap-1">
+                <h6 className="text-black font-bold">Full Name: </h6>
+                <input
+                  type="text"
+                  name="email"
+                  className=" rounded-r-md bg-transparent text-black placeholder:text-black "
+                  placeholder="Enter your name"
+                  onChange={(e) => {
+                    setFullName(e.target.value);
+                  }}
+                />
+              </div>
               <div className="flex justify-center items-center gap-1">
                 <h6 className="text-black font-bold">Email: </h6>
                 <input
@@ -72,7 +84,7 @@ function LoginPage () {
                 </button>
               </div>
               <div className="h-10 w-full flex justify-center items-center mt-20 text-black">
-                <p className=" text-[#0B1215]">New to ShoeShack? <Link href='/signup'>Signup</Link></p>
+                <p className=" text-[#0B1215]">Already a User? <Link href='/login'>Login</Link></p>
               </div>
             </div>
           </div>
