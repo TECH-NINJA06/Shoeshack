@@ -26,7 +26,7 @@ function LoginPage () {
           </div>
           <div className="h-[75%] w-full bg-white rounded">
             <div className="flex items-center flex-col pap-5 mt-7 justify-between">
-              <div className="flex justify-center items-center gap-1">
+              <div className="flex justify-center items-center gap-10">
                 <h6 className="text-black font-bold">Email: </h6>
                 <input
                   type="text"
@@ -50,14 +50,14 @@ function LoginPage () {
                   }}
                 />
               </div>
-              <div className="h-10 w-36 dark:bg-black bg-white dark:text-white flex justify-center items-center rounded-md">
+              <div className="h-10 w-36 bg-black text-white flex justify-center items-center rounded-md">
                 <button className="h-full w-full" onClick={handleSubmit}>
                   Login
                 </button>
               </div>
-              <div className="h-10 w-40 bg-white dark:bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
+              <div className="h-10 w-40 bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
                 <button
-                  className="h-full w-full border flex justify-center items-center gap-1 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+                  className="h-full w-full border flex justify-center items-center gap-1 border-slate-700 rounded-lg text-slate-200 hover:border-slate-500 hover:text-slate-300 hover:shadow transition duration-150"
                   onClick={() => signIn("google")}
                 >
                   <img
@@ -66,7 +66,7 @@ function LoginPage () {
                     loading="lazy"
                     alt="google logo"
                   />
-                  <span className="font-medium text-black text-sm justify-center dark:text-white">
+                  <span className="font-medium text-sm justify-center text-white">
                     Login with Google
                   </span>
                 </button>

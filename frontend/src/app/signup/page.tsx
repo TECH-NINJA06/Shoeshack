@@ -4,9 +4,9 @@ import { useSession, signIn } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 
-function LoginPage () {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -17,17 +17,23 @@ function LoginPage () {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('/api/auth/signup', { fullName, email, password })
+      const response = await axios.post("/api/auth/signup", {
+        fullName,
+        email,
+        password,
+      });
       console.log(response.data);
-      router.push('/profile')
-      console.log(`"fullName" ${fullName}, "email" ${email}, "password" ${password}`);
-    
+      router.push("/profile");
+      console.log(
+        `"fullName" ${fullName}, "email" ${email}, "password" ${password}`
+      );
     } catch (error) {
       console.log(error);
       setLoading(false);
     } finally {
-        setLoading(false);
-    }};
+      setLoading(false);
+    }
+  };
 
   return (
     <div className=" h-[89vh] w-[100vw] relative">
@@ -36,14 +42,14 @@ function LoginPage () {
         alt="bgimage"
         className="h-full -z-50 grayscale w-full"
       />
-      <div className=" h-[80%] w-[30%] z-50  flex justify-center items-center absolute top-[5%] left-[35%] rounded-md backdrop-blur-[4px] border border-white">
+      <div className=" h-[92%] w-[30%] z-50  flex justify-center items-center absolute top-[5%] left-[35%] rounded-md backdrop-blur-[4px] border border-white">
         <div className="h-full w-full mx-5 flex flex-col justify-evenly">
           <div className=" h-20 w-full flex justify-center items-center font-semibold text-3xl text-[#0B1215]">
-            <h1>{loading? "Loading": "Register"}</h1>
+            <h1>{loading ? "Loading" : "Register"}</h1>
           </div>
-          <div className="h-[75%] w-full bg-white rounded">
-            <div className="flex items-center flex-col pap-5 mt-7 justify-between">
-            <div className="flex justify-center items-center gap-1">
+          <div className="h-[80%] w-full bg-white rounded">
+            <div className="flex items-center flex-col gap-5 mt-7 justify-between">
+              <div className="flex justify-center items-center gap-1">
                 <h6 className="text-black font-bold">Full Name: </h6>
                 <input
                   type="text"
@@ -55,7 +61,7 @@ function LoginPage () {
                   }}
                 />
               </div>
-              <div className="flex justify-center items-center gap-1">
+              <div className="flex justify-center items-center gap-10">
                 <h6 className="text-black font-bold">Email: </h6>
                 <input
                   type="text"
@@ -67,7 +73,7 @@ function LoginPage () {
                   }}
                 />
               </div>
-              <div className="flex justify-center items-center gap-1 mt-7 mb-10">
+              <div className="flex justify-center items-center gap-1 mb-10">
                 <h6 className="text-black font-bold ">Password: </h6>
                 <input
                   type="password"
@@ -101,7 +107,9 @@ function LoginPage () {
                 </button>
               </div>
               <div className="h-10 w-full flex justify-center items-center mt-20 text-black">
-                <p className=" text-[#0B1215]">Already a User? <Link href='/login'>Login</Link></p>
+                <p className=" text-[#0B1215]">
+                  Already a User? <Link href="/login">Login</Link>
+                </p>
               </div>
             </div>
           </div>
@@ -109,6 +117,6 @@ function LoginPage () {
       </div>
     </div>
   );
-};
+}
 
 export default LoginPage;
