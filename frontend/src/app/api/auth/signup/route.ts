@@ -1,37 +1,50 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcryptjs from "bcryptjs";
-import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import User from "@/models/user.models";
+import { connect } from "@/config/dbConfig";
 
-export async function POST(req: NextRequest) {
+
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json();
+    await connect();
+    const { fullName, email, password } = await request.json();
 
-    const { fullName, email, password, avatar } = body;
     if (!fullName || !email || !password) {
+      console.log("Please enter fields");
       return NextResponse.json(
-        { message: "All fields are required" },
-        { status: 409 }
+        { error: "All fields are required" },
+        { status: 422 }
       );
     }
 
-    const existingUser = await db.user.findUnique({
-      where: { email: email },
-    });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
-        { message: "User already exists" },
-        { status: 409 }
+        { error: "User already exists" },
+        { status: 409 } 
       );
     }
 
-    const hashedPassword = await bcryptjs.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await db.user.create({
-      data: { fullName, email, password: hashedPassword, avatar },
+    const newUser = new User({
+      fullName: fullName,
+      email: email,
+      password: hashedPassword,
     });
+    const savedUser = await newUser.save();
+    console.log(savedUser);
+    
+    return NextResponse.json(
+      { user: savedUser, message: "User created successfully", success: true },
+      { status: 200 }
+    );
 
-    return NextResponse.json({ user: newUser, message: "User created successfully"}, { status: 200 });
   } catch (error) {
-    NextResponse.json(error);
+    console.log("error at signup route")
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
