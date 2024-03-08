@@ -1,6 +1,6 @@
-import { db } from "@/lib/prismaDB";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
+import mongoose from "mongoose";
 
 export async function POST(req: NextRequest) {
   try {

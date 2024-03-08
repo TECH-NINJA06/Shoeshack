@@ -74,3 +74,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+html, body {
+  width: 100vw;
+  overflow: hidden;
+  background-color: #0B1215;
+}
