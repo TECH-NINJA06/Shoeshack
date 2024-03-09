@@ -27,11 +27,13 @@ function LoginPage() {
         const data = await response.data
         const token = data.token;
         console.log(token);
-        // Store the token in localStorage
-        localStorage.setItem('token', token);
+
+        const id = data.id;
+        const fullname = data.fullname;
+
         toast.success("Signup successful");
 
-      router.push("/profile");
+      router.push(`/profile?id=${id}&name=${fullname}`);
       console.log(
         `"fullName" ${fullName}, "email" ${email}, "password" ${password}`
       );

@@ -20,8 +20,6 @@ const userSchema = new Schema(
       avatar: { 
         type: String, 
       },
-      verifyToken: String,
-      verifyTokenExpiry: String
     },
     {
       timestamps: true,

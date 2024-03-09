@@ -15,10 +15,6 @@ function LoginPage() {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
-      if (token) {
-        localStorage.removeItem("token");
-      }
       const response = await axios.post(`/api/auth/login`,{
         email,
         password
@@ -26,10 +22,12 @@ function LoginPage() {
       if (response.status === 200) {
         const data = response.data;
         const token = data.token;
-        localStorage.setItem('token', token);
         console.log(token);
+
+        const id = data.id;
+        const fullname = data.fullName;
         toast.success("Login successful");
-        router.push("/profile");
+        router.push(`/profile?id=${id}&name=${fullname}`);
       }
       console.log(`"email" ${email}, "password" ${password}`);
     } catch (error) {

@@ -38,10 +38,14 @@ export async function POST(request: NextRequest) {
 
     const token = jwt.sign({ userId: savedUser._id }, "hola123", { expiresIn: '1d' })
     
-    return NextResponse.json(
-      { user: savedUser, token: token, message: "User created successfully", success: true },
+    const response =  NextResponse.json(
+      { user: savedUser, id: savedUser._id, fullName: savedUser.fullName, token: token, message: "User created successfully", success: true },
       { status: 200 }
     );
+    response.cookies.set("token", token, {
+      httpOnly: true,  
+    })
+    return response;
 
   } catch (error) {
     console.log("error at signup route")
