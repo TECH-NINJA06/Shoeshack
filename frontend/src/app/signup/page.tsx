@@ -4,7 +4,7 @@ import { useSession, signIn } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import {toast} from "react-hot-toast";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -23,10 +23,19 @@ function LoginPage() {
         password,
       });
       console.log(response.data);
+      if (response.status === 200) {
+        const data = await response.data
+        const token = data.token;
+        console.log(token);
+        // Store the token in localStorage
+        localStorage.setItem('token', token);
+        toast.success("Signup successful");
+
       router.push("/profile");
       console.log(
         `"fullName" ${fullName}, "email" ${email}, "password" ${password}`
       );
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);
