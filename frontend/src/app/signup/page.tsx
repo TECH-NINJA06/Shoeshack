@@ -47,7 +47,7 @@ function LoginPage() {
   };
 
   return (
-    <div className=" h-[89vh] w-[100vw] relative">
+    <div className=" h-[100vh] w-[100vw] relative">
       <img
         src="./authBG.jpg"
         alt="bgimage"

@@ -27,16 +27,17 @@ export async function POST(request: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    const token = jwt.sign({ email: email }, "hola123", { expiresIn: '1d' })
+    
     const newUser = new User({
       fullName: fullName,
       email: email,
       password: hashedPassword,
+      access_token: token
     });
     const savedUser = await newUser.save();
     console.log(savedUser);
 
-    const token = jwt.sign({ userId: savedUser._id }, "hola123", { expiresIn: '1d' })
     
     const response =  NextResponse.json(
       { user: savedUser, id: savedUser._id, fullName: savedUser.fullName, token: token, message: "User created successfully", success: true },

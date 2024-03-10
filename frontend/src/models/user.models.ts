@@ -20,6 +20,9 @@ const userSchema = new Schema(
       avatar: { 
         type: String, 
       },
+      access_token: {
+        type: String
+      },
     },
     {
       timestamps: true,

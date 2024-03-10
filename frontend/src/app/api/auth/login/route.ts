@@ -34,6 +34,8 @@ export async function POST(req: NextRequest) {
     }
 
     const token = jwt.sign({ userId: savedUser._id }, "hola123", { expiresIn: '1d' });
+    savedUser.access_token = token;
+    await savedUser.save();
 
     const response = NextResponse.json(
         { user: savedUser, id: savedUser._id, fullName: savedUser.fullName, token: token, message: "User logged in successfully", success: true },
