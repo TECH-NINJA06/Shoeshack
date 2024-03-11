@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 
-const page = () => {
+function page () {
   const router = useRouter();
   const [profile, setProfile] = useState({});
   const searchParams = useSearchParams();
