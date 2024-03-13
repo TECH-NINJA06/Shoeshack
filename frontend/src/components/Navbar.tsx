@@ -5,25 +5,51 @@ import { FaSearch } from "react-icons/fa";
 import { ModeToggle } from "../app/components/ThemeSwitcher";
 import { IoCartOutline } from "react-icons/io5";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import { NextRequest } from "next/server";
+import Cookies from "js-cookie";
+import { getCookie } from "@/helpers/getCookie";
 
-const Navbar = (request: NextRequest) => {
-  const searchParams = useSearchParams();
-  const userID = searchParams.get("id");
+const Navbar = () => {
   const [search, setSearch] = useState("");
+  const [profile, setProfile] = useState({});
   const [cartItem, setCartItem] = useState(0);
-  const [auth, setAuth] = useState('');
+  const [auth, setAuth] = useState(false);
 
+  // const token = Cookies.get("token");
   useEffect(() => {
-    const token = request.cookies?.get('token')?.value;
-    setAuth(token!);
-  }, [])
-  
-  
+    (() => {
+      const token = getCookie();
+      console.log("token: " + token);
+      if (!token) {
+        console.log("Unauthorized Request");
+      } else {
+        setAuth(true);
+      }
+    })();
+  }, []);
+
+  // useEffect(() => {
+  //   (async ()=>{
+
+  //     }
+  //     // const response = await fetch(`/api/auth/profile`, {
+  //     //   method: 'GET',
+  //     //   headers: {
+  //     //     'Authorization': token,
+  //     //   },
+  //     // });
+  //     // if(response.status === 200) {
+  //     //   const data = await response.json();
+  //     //   setProfile(data);
+  //     //   console.log(data);
+  //     // } else{
+  //     //   console.log("Error at navbar")
+  //     // }
+
+  //   })()
+  // }, [])
 
   const handleSearch = () => {
-    console.log(search)
+    console.log(search);
   };
 
   return (
@@ -69,20 +95,27 @@ const Navbar = (request: NextRequest) => {
               </div>
             </Link>
 
-            {
-              auth? (<div className="h-9 w-full bg-red-600 rounded px-1">
-              <Link
-                href="/login"
-                className="h-full w-full flex items-center justify-center text-white font-medium text-base"
-              >
-                LOGIN
+            {auth ? (
+              <Link href="/profile" className="h-14 w-28 rounded-full">
+                <div
+                  className="size-full rounded-full bg-center bg-no-repeat bg-cover"
+                  style={{
+                    backgroundImage: `url(${
+                      profile?.avatar ? profile.avatar : "/navAvatar.jpg"
+                    })`,
+                  }}
+                ></div>
               </Link>
-            </div>) : (<Link href='/profile'className="h-14 w-28 rounded-full" >
-              <div className="size-full rounded-full bg-center bg-no-repeat bg-cover" style={{backgroundImage: `url("/navAvatar.jpg")`}}>
+            ) : (
+              <div className="h-9 w-full bg-red-600 rounded px-1">
+                <Link
+                  href="/login"
+                  className="h-full w-full flex items-center justify-center text-white font-medium text-base"
+                >
+                  LOGIN
+                </Link>
               </div>
-              </Link>)
-            }
-            
+            )}
           </div>
         </div>
       </div>

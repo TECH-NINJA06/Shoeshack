@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 
-function page () {
+const Page = () => {
   const router = useRouter();
   const [profile, setProfile] = useState({});
   const searchParams = useSearchParams();
@@ -16,17 +16,25 @@ function page () {
       if (!token) {
         console.log("Unauthorized Request");
       }
-      const response = await fetch(`/api/auth/profile`, {
-        headers: JSON.stringify({
-          Authorization: `Bearer ${token}`,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setProfile(data);
-      console.log(data);
+      // const response = await fetch(`/api/auth/profile`, {
+      //   method: 'GET',
+      //   headers: {
+      //     'Authorization': token,
+      //   },
+      // });
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! status: ${response.status}`);
+      // }
+      // const data = await response.json();
+      // setProfile(data);
+      console.log(token);
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      console.log(id);
+     const response = await axios.get(`/api/auth/profile/${id}`);
+     setProfile(response.data)
     })();
   }, []);
 
@@ -46,13 +54,16 @@ function page () {
       {/* <Navbar /> */}
       <div className="flex justify-between items-center h-[100vh] w-screen">
         <div className="h-[90vh] w-[30%] flex flex-col gap-5 py-5 border">
-          <div className="w-full h-[40%] flex justify-center items-center">
+          <div className="w-full h-[40%] flex flex-col justify-evenly items-center">
             <div className="size-28 rounded-full">
               <img
                 src="/navAvatar.jpg"
                 alt="hola"
                 className="size-full rounded-full"
               />
+            </div>
+            <div className="w-full h-14 bg-red-50 flex justify-center items-center">
+              {profile?.fullName}
             </div>
           </div>
           <div className="w-full h-[55%] flex flex-col gap-5 items-center pb-5">
@@ -104,4 +115,4 @@ function page () {
   );
 };
 
-export default page;
+export default Page;
