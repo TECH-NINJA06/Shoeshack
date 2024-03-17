@@ -5,8 +5,10 @@ import { FaSearch } from "react-icons/fa";
 import { ModeToggle } from "../app/components/ThemeSwitcher";
 import { IoCartOutline } from "react-icons/io5";
 import axios from "axios";
-import Cookies from "js-cookie";
-import { getCookie } from "@/helpers/getCookie";
+import { getCookie } from 'cookies-next';
+import { cookies } from 'next/headers';
+import { getCookies } from "@/helpers/getCookie";
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
@@ -16,13 +18,15 @@ const Navbar = () => {
 
   // const token = Cookies.get("token");
   useEffect(() => {
-    (() => {
-      const token = getCookie();
+    (async () => {
+      const token = await Cookies.get("token");
       console.log("token: " + token);
-      if (!token) {
-        console.log("Unauthorized Request");
-      } else {
+      if (token) {
         setAuth(true);
+        console.log(token);
+      } else {
+        console.log("Unauthorized Request");
+        setAuth(false);
       }
     })();
   }, []);
@@ -95,7 +99,7 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {auth ? (
+            {auth == true ? (
               <Link href="/profile" className="h-14 w-28 rounded-full">
                 <div
                   className="size-full rounded-full bg-center bg-no-repeat bg-cover"

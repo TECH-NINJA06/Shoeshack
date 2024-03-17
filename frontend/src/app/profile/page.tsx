@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Cookies from "js-cookie";
+
 
 const Page = () => {
   const router = useRouter();
@@ -12,22 +12,11 @@ const Page = () => {
   const id = searchParams.get("id");
   useEffect(() => {
     (async () => {
-      const token = Cookies.get("token");
-      if (!token) {
-        console.log("Unauthorized Request");
-      }
-      // const response = await fetch(`/api/auth/profile`, {
-      //   method: 'GET',
-      //   headers: {
-      //     'Authorization': token,
-      //   },
-      // });
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
+      // const token = getCookie('token', {getCookies});
+      // if (!token) {
+      //   console.log("Unauthorized Request");
       // }
-      // const data = await response.json();
-      // setProfile(data);
-      console.log(token);
+      // console.log(token);
     })();
   }, []);
   useEffect(() => {

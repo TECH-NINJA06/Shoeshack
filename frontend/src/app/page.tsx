@@ -1,14 +1,12 @@
-import Image from "next/image";
-import { HeroCarousal } from "../components/HeroCarousal";
-import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
       <div className="flex justify-center items-center h-screen w-screen">
-      <div className="h-[90vh] w-full">
-        <HeroCarousal />
+      <div className="size-[50%] bg-white rounded-xl flex flex-col gap-10 items-center justify-evenly">
+        <h1 className="font-semibold text-xl">New to ShoeShack? Please Login Here</h1>
+        <Link href='/login' className="h-14 w-32 flex justify-center items-center"><div className="size-full flex justify-center items-center bg-black text-white rounded-lg text-xl">LOGIN</div></Link>
       </div>     
       </div>
     </>
