@@ -10,20 +10,13 @@ const Page = () => {
   const [profile, setProfile] = useState({});
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  useEffect(() => {
-    (async () => {
-      // const token = getCookie('token', {getCookies});
-      // if (!token) {
-      //   console.log("Unauthorized Request");
-      // }
-      // console.log(token);
-    })();
-  }, []);
+
   useEffect(() => {
     (async () => {
       console.log(id);
      const response = await axios.get(`/api/auth/profile/${id}`);
      setProfile(response.data)
+     console.log("Profile updated" + response.data);
     })();
   }, []);
 
@@ -51,7 +44,7 @@ const Page = () => {
                 className="size-full rounded-full"
               />
             </div>
-            <div className="w-full h-14 bg-red-50 flex justify-center items-center">
+            <div className="w-full h-14 flex justify-center items-center text-white font-semibold">
               {profile?.fullName}
             </div>
           </div>
