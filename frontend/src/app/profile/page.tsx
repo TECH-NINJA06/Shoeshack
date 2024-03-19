@@ -44,7 +44,7 @@ const Page = () => {
                 className="size-full rounded-full"
               />
             </div>
-            <div className="w-full h-14 flex justify-center items-center text-white font-semibold">
+            <div className="w-full h-14 flex justify-center items-center text-white font-semibold ">
               {profile?.fullName}
             </div>
           </div>
