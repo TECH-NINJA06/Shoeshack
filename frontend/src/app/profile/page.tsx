@@ -33,9 +33,8 @@ const Page = () => {
 
   return (
     <div className="h-screen max-w-screen">
-      {/* <Navbar /> */}
-      <div className="flex justify-between items-center h-[100vh] w-screen">
-        <div className="h-[90vh] w-[30%] flex flex-col gap-5 py-5 border">
+      <div className="flex justify-center items-center h-[100vh] w-screen">
+        <div className="h-[90vh] w-[30%] flex flex-col gap-5 py-5 border-2">
           <div className="w-full h-[40%] flex flex-col justify-evenly items-center">
             <div className="size-28 rounded-full">
               <img
@@ -89,9 +88,29 @@ const Page = () => {
                 </button>
               </div>
             </div>
+            <div className="w-full h-20 flex justify-center items-center gap-5">
+              <div className="h-14 w-32 bg-white rounded">
+                <button
+                  onClick={() => {
+                    router.push(`/home`);
+                  }}
+                  className="size-full font-semibold"
+                >
+                  Home
+                </button>
+              </div>
+              {/* <div className="h-14 w-32 bg-white rounded">
+                <button
+                  onClick={()=>{router.push('/search')}}
+                  className="size-full font-semibold"
+                >
+                  Search
+                </button>
+              </div> */}
+            </div>
           </div>
         </div>
-        <div className="h-full w-[55%] bg-red-500"></div>
+        {/* <div className="h-full w-[55%] bg-red-500"></div> */}
       </div>
     </div>
   );
