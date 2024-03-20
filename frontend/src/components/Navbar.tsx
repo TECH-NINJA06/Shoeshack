@@ -9,6 +9,7 @@ import { getCookie } from 'cookies-next';
 import { cookies } from 'next/headers';
 import { getCookies } from "@/helpers/getCookie";
 import Cookies from 'js-cookie';
+import { useSearchParams } from "next/navigation";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
@@ -17,40 +18,31 @@ const Navbar = () => {
   const [auth, setAuth] = useState(false);
 
   // const token = Cookies.get("token");
+  // useEffect(() => {
+  //   (async () => {
+  //     const token = await Cookies.get("token");
+  //     console.log("token: " + token);
+  //     if (token) {
+  //       setAuth(true);
+  //       console.log(token);
+  //     } else {
+  //       console.log("Unauthorized Request");
+  //       setAuth(false);
+  //     }
+  //   })();
+  // }, []);
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
   useEffect(() => {
     (async () => {
-      const token = await Cookies.get("token");
-      console.log("token: " + token);
-      if (token) {
-        setAuth(true);
-        console.log(token);
-      } else {
-        console.log("Unauthorized Request");
-        setAuth(false);
-      }
+      console.log(id);
+     const response = await axios.get(`/api/home/${id}`);
+     setProfile(response.data)
+     console.log("Profile updated" + response.data);
     })();
   }, []);
-
-  // useEffect(() => {
-  //   (async ()=>{
-
-  //     }
-  //     // const response = await fetch(`/api/auth/profile`, {
-  //     //   method: 'GET',
-  //     //   headers: {
-  //     //     'Authorization': token,
-  //     //   },
-  //     // });
-  //     // if(response.status === 200) {
-  //     //   const data = await response.json();
-  //     //   setProfile(data);
-  //     //   console.log(data);
-  //     // } else{
-  //     //   console.log("Error at navbar")
-  //     // }
-
-  //   })()
-  // }, [])
 
   const handleSearch = () => {
     console.log(search);
@@ -98,9 +90,7 @@ const Navbar = () => {
                 <span>{cartItem}</span>
               </div>
             </Link>
-
-            {auth == true ? (
-              <Link href="/profile" className="h-14 w-28 rounded-full">
+              <Link href={`/profile?id=${id}`} className="h-14 w-28 rounded-full">
                 <div
                   className="size-full rounded-full bg-center bg-no-repeat bg-cover"
                   style={{
@@ -110,16 +100,6 @@ const Navbar = () => {
                   }}
                 ></div>
               </Link>
-            ) : (
-              <div className="h-9 w-full bg-red-600 rounded px-1">
-                <Link
-                  href="/login"
-                  className="h-full w-full flex items-center justify-center text-white font-medium text-base"
-                >
-                  LOGIN
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       </div>

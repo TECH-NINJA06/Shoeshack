@@ -92,7 +92,7 @@ const Page = () => {
               <div className="h-14 w-32 bg-white rounded">
                 <button
                   onClick={() => {
-                    router.push(`/home`);
+                    router.push(`/home?id=${id}`);
                   }}
                   className="size-full font-semibold"
                 >
