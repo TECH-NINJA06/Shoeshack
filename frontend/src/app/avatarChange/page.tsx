@@ -1,53 +1,28 @@
 'use client'
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const ImageUpload = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const [imageUrl, setImageUrl] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [avatar, setAvatar] = useState(null)
 
-  const onSubmit = async (data) => {
-    setIsLoading(true);
-    setErrorMessage(null);
-
-    try {
-      const formData = new FormData(); // Create a FormData object
-      formData.append('image', data.image[0]); // Add image to FormData
-
-      const response = await axios.put('/api/auth/avatar', {
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upload image');
-      }
-
-      const responseData = await response.data;
-      setImageUrl(responseData.url); // Update image URL from backend response
-
-      console.log('Image uploaded successfully!');
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      setErrorMessage(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setAvatar(file);
   };
 
+  const onSubmit = () => {
+    console.log("hola from Submit");
+  }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="file" {...register('image', { required: true })} />
-      {errors.image && <span>Image is required</span>}
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? 'Uploading...' : 'Upload Image'}
-      </button>
-      {imageUrl && <img src={imageUrl} alt="Uploaded Image" />}
-      {errorMessage && <p className="error">{errorMessage}</p>}
-    </form>
-  );
+    <div className='flex justify-center items-center my-40'>
+    <div className="grid w-full max-w-sm items-center gap-1.5 text-white">
+      <h1>Avatar</h1>
+      <Input id="picture" type="file" onChange={handleFileChange} />
+      <button onClick={onSubmit} className='mt-5 mx-40 font-semibold h-14 w-20 border rounded-lg'>Submit</button>
+    </div>
+    </div>
+  )
 };
 
 export default ImageUpload;

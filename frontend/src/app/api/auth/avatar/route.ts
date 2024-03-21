@@ -1,31 +1,41 @@
-import { connect } from "@/config/dbConfig";
-import { uploadImage } from '@/app/lib/cloudinary';
-import { NextRequest, NextResponse } from "next/server";
-import User from "@/models/user.models";
+import multer from 'multer';
+import { Cloudinary } from 'cloudinary';
+import { NextRequest } from 'next/server';
 
-export default async function handler(req: NextRequest) {
-  if (req.method === 'POST') {
-    try {
-      await connect();
-     const reqBody = req.json();
-      const imageFile = reqBody.body;
+const cloudinary = new Cloudinary({
+ cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+ api_key: process.env.CLOUDINARY_API_KEY,
+ api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-      const uploadedImage = await uploadImage(imageFile);
+// Configure Multer storage
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-      // Optionally save image data to MongoDB
-        const imageData = {
-          url: uploadedImage.url,
-          // Add other relevant image metadata
-        };
+export const config = {
+ api: {
+    bodyParser: false,
+ },
+};
 
-        const user = await db.collection('images').insertOne(imageData);
+export default async function handler(req: NextRequest, res) {
+ if (req.method === 'POST') {
+    upload.single('image')(req, res, async (err) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
 
-      res.status(200).json({ url: uploadedImage.url }); // Return uploaded image URL
-    } catch (error) {
-      res.status(500).json({ message: 'Error uploading image' });
-      console.error(error);
-    }
-  } else {
-    res.status(405).json({ message: 'Method not allowed' });
-  }
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'my_next_app_images',
+        });
+
+        return res.status(200).json({ url: result.secure_url });
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    });
+ } else {
+    res.status(405).json({ error: 'Method not allowed' });
+ }
 }
