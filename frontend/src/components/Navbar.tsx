@@ -9,9 +9,10 @@ import { getCookie } from 'cookies-next';
 import { cookies } from 'next/headers';
 import { getCookies } from "@/helpers/getCookie";
 import Cookies from 'js-cookie';
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter()
   const [search, setSearch] = useState("");
   const [profile, setProfile] = useState({});
   const [cartItem, setCartItem] = useState(0);
@@ -46,6 +47,7 @@ const Navbar = () => {
 
   const handleSearch = () => {
     console.log(search);
+    router.push(`/search?q=${search}`)
   };
 
   return (
