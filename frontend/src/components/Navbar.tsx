@@ -33,13 +33,9 @@ const Navbar = () => {
   //   })();
   // }, []);
 
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-
   useEffect(() => {
     (async () => {
-      console.log(id);
-     const response = await axios.get(`/api/home/${id}`);
+     const response = await axios.get(`/api/home`);
      setProfile(response.data)
      console.log("Profile updated" + response.data);
     })();
@@ -92,7 +88,7 @@ const Navbar = () => {
                 <span>{cartItem}</span>
               </div>
             </Link>
-              <Link href={`/profile?id=${id}`} className="h-14 w-28 rounded-full">
+              <Link href={`/profile`} className="h-14 w-28 rounded-full">
                 <div
                   className="size-full rounded-full bg-center bg-no-repeat bg-cover"
                   style={{

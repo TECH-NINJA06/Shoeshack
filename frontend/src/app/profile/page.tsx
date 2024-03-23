@@ -14,7 +14,7 @@ const Page = () => {
   useEffect(() => {
     (async () => {
       console.log(id);
-     const response = await axios.get(`/api/auth/profile/${id}`);
+     const response = await axios.get(`/api/auth/profile`);
      setProfile(response.data)
      console.log("Profile updated" + response.data);
     })();
@@ -92,7 +92,7 @@ const Page = () => {
               <div className="h-14 w-32 bg-white rounded">
                 <button
                   onClick={() => {
-                    router.push(`/home?id=${id}`);
+                    router.push(`/home`);
                   }}
                   className="size-full font-semibold"
                 >
