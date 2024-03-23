@@ -20,7 +20,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
     };
 
     fetchProduct();
-  }, [params.slug]); // Run the effect whenever params.slug changes
+  }, [params.slug]);
 
   return (
     <div className='h-screen w-screen'>
@@ -33,8 +33,8 @@ const Page = ({ params }: { params: { slug: string } }) => {
           {/* Render product details */}
           {product && (
             <div>
-              <h2>{product.name}</h2>
-              <p>{product.description}</p>
+              <h2>{product.title}</h2>
+              <p>{product.brand}</p>
               {/* Render other product details as needed */}
             </div>
           )}
