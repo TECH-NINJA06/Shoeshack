@@ -12,19 +12,22 @@ const productSchema = new Schema(
       required: true,
     },
     images: {
-      type: String, // Changed from Array to String if there's only one image URL
+      type: String,
       required: true,
     },
     color: {
       type: String,
     },
     price: {
-      type: String, // Kept as String to maintain currency symbol
+      type: Number,
       required: true,
     },
     inventory: {
       type: Number,
       required: true,
+    },
+    category: {
+      type: String,
     },
     sizes: [
       {

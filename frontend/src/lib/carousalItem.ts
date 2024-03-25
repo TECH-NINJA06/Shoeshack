@@ -11,7 +11,4 @@ export const CAROUSEL = [
     {
         title: "Hello World4"
     },
-    {
-        title: "Hello World5"
-    },
 ]

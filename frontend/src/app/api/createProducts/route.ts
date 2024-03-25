@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     await connect();
-    const { title, brand, images, color, price, inventory, sizes } = await req.json();
+    const { title, brand, images, color, price, inventory, category, sizes } = await req.json();
 
     if (!title || !brand || !images || !price || !inventory || !sizes) {
       console.log("Please enter fields");
@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
         color: color,
         price: price,
         inventory: inventory,
-        sizes: sizes
+        sizes: sizes,
+        category: category,
       });
       const savedProducts = await newProduct.save();
       console.log(savedProducts);
