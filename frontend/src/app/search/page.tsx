@@ -7,9 +7,9 @@ import { ProductItem } from '../components/Search/Product';
 const page = () => {
     const [results, setResults] = useState([]);
     const searchParams = useSearchParams()
+    const result = searchParams.get('q')
     useEffect(() => {
         (async () => {
-            const result = searchParams.get('q')
           console.log(results);
          const response = await axios.get(`/api/search/${result}`);
          setResults(response.data)
@@ -18,8 +18,14 @@ const page = () => {
       }, []);
   return (
     <div className='text-white'>
-        {results ? results[0]?.title : "Hola"}
-        <ProductItem title={results[0]?.title}/>
+        <h1>Search results for: {result}</h1>
+        <div className='w-full h-auto'>
+          {results?.map((product)=> {
+            return (
+              <ProductItem title={product?.title} desc={product?.category} brand={product?.brand} image={product?.images} productLink={product._id} />
+            )
+          })}
+        </div>
     </div>
   )
 }

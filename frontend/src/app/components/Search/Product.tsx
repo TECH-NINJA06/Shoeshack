@@ -3,31 +3,33 @@ import React from "react";
 import { BackgroundGradient } from "../ui/background-gradient";
 import Image from "next/image";
 import { IoCartOutline } from "react-icons/io5";
+import Link from "next/link";
 
 interface PageHeadProps {
   title: string;
   desc: string;
   image: string;
   brand: string;
+  productLink: string;
 }
 
 export function ProductItem({
   title,
   desc,
   image,
-  brand
+  brand,
+  productLink
 }: PageHeadProps) {
   return (
+    <Link className="w-80 h-[40rem]" href={`/product/${productLink}`}>
     <div className="w-80 h-[40rem]">
       <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900 flex flex-col items-center">
-        <div className=" w-[18rem] h-[15rem] bg-center object-contain rounded-xl" style={{ backgroundImage: `url("${image}")`}}>
-          {/* <img
+        <div className=" w-[18rem] h-[15rem] bg-center object-contain rounded-xl">
+          <img
           src={image}
           alt={title}
-          height="400"
-          width="400"
-          className="object-contain"
-        /> */}
+          className="object-contain size-full aspect-video"
+        />
         </div>
         
         <p className="text-sm font-semibold sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
@@ -55,5 +57,6 @@ export function ProductItem({
         </div>
       </BackgroundGradient>
     </div>
+    </Link>
   );
 }

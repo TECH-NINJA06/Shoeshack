@@ -2,20 +2,37 @@ import { connect } from "@/config/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Product from "@/models/product.models";
 
+const ignoredWords = ["shoes"]; // Add more words to ignore if needed
+
 export async function GET(req: NextRequest, { params }) {
   try {
     // Connect to the database
     await connect();
 
-    const { slug } = params;
+    let { slug } = params;
     console.log('keyword:', slug);
 
-    // Search for products based on the provided keyword (slug)
+    // Remove ignored words from the slug
+    ignoredWords.forEach(shoes => {
+      slug = slug.replace(new RegExp(`\\b${shoes}\\b`, "gi"), "");
+    });
+
+    // Trim any excess spaces
+    slug = slug.trim();
+
+    // If slug becomes empty after removing ignored words, return no products found
+    if (!slug) {
+      console.log("No relevant keyword provided");
+      return NextResponse.json({ message: "No relevant keyword provided", success: false }, { status: 400 });
+    }
+
+    // Search for products based on the modified keyword (slug)
     const products = await Product.find({
       $or: [
         { title: { $regex: slug, $options: "i" } }, 
         { brand: { $regex: slug, $options: "i" } }, 
-        { color: { $regex: slug, $options: "i" } }, 
+        { color: { $regex: slug, $options: "i" } },
+        { category: { $regex: slug, $options: "i" } }, 
       ],
     });
 
@@ -24,6 +41,7 @@ export async function GET(req: NextRequest, { params }) {
       console.log("No products found");
       return NextResponse.json({ message: "No products found", success: true }, { status: 404 });
     }
+    
     console.log(products[0].images[0])
     return NextResponse.json(products, { status: 200 });
   } catch (error) {

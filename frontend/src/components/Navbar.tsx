@@ -55,7 +55,7 @@ const Navbar = () => {
         </div>
         <div className="h-full w-[70%] flex items-center">
           <div className="w-[50%] flex h-15 rounded justify-center items-center mx-20">
-            <select className="rounded-l h-9 w-24 text-center text-white bg-red-600 inset-0">
+            {/* <select className="rounded-l h-9 w-24 text-center text-white bg-red-600 inset-0">
               <option className="dark:bg-[#0B1215] dark:text-white">
                 Athletic
               </option>
@@ -65,7 +65,7 @@ const Navbar = () => {
               <option className="dark:bg-[#0B1215] dark:text-white">
                 Casual
               </option>
-            </select>
+            </select> */}
             <div className="w-full text-base border h-9 flex items-center rounded-r bg-[#0B1215] text-white">
               <input
                 placeholder="  Search ShoeShack"
