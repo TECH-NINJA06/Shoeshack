@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react'
 import { ProductItem } from '../components/Search/Product';
+import Link from 'next/link';
 
 const page = () => {
     const [results, setResults] = useState([]);
@@ -18,8 +19,9 @@ const page = () => {
       }, []);
   return (
     <div className='text-white'>
+      <Link href={'/home'}>Back to home</Link>
         <h1>Search results for: {result}</h1>
-        <div className='w-full h-auto'>
+        <div className='w-full h-auto grid grid-cols-4 px-10'>
           {results?.map((product)=> {
             return (
               <ProductItem title={product?.title} desc={product?.category} brand={product?.brand} image={product?.images} productLink={product._id} />

@@ -13,8 +13,11 @@ export async function GET(req: NextRequest, { params }) {
     console.log('keyword:', slug);
 
     // Remove ignored words from the slug
-    ignoredWords.forEach(shoes => {
-      slug = slug.replace(new RegExp(`\\b${shoes}\\b`, "gi"), "");
+    ignoredWords.forEach(ignoredWord => {
+      slug = slug.replace(new RegExp(`\\b${ignoredWord}\\b`, "gi"), ""); // Match whole words
+      slug = slug.replace(new RegExp(`\\s${ignoredWord}\\s`, "gi"), " "); // Match preceded and followed by spaces
+      slug = slug.replace(new RegExp(`^${ignoredWord}\\s`, "gi"), ""); // Match at the beginning of the string
+      slug = slug.replace(new RegExp(`\\s${ignoredWord}$`, "gi"), ""); // Match at the end of the string
     });
 
     // Trim any excess spaces
