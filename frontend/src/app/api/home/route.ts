@@ -1,7 +1,7 @@
 import { connect } from "@/config/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/user.models";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 
 export async function GET(req: NextRequest) {
@@ -9,8 +9,16 @@ export async function GET(req: NextRequest) {
     await connect();
 
     const token = req.cookies.get('token')?.value;
-    const decodedToken = jwt.verify(token, 'hola123')
+    if (!token) {
+      return NextResponse.json({ message: "Token not found", success: false }, { status: 401 });
+    }
+
+    const decodedToken = jwt.verify(token, 'hola123') as JwtPayload; // Explicitly type decodedToken
     console.log('id:', decodedToken);
+
+    if (!decodedToken.userId) {
+      return NextResponse.json({ message: "User not found", success: false }, { status: 404 });
+    }
 
     const userId = decodedToken.userId;
     const user = await User.findOne({ _id: userId }).select("-password")

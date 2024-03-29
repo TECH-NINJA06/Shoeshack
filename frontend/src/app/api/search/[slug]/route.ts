@@ -4,7 +4,7 @@ import Product from "@/models/product.models";
 
 const ignoredWords = ["shoes"]; // Add more words to ignore if needed
 
-export async function GET(req: NextRequest, { params }) {
+export async function GET({ params } : any) {
   try {
     // Connect to the database
     await connect();

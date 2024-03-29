@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { ProductItem } from '../components/Search/Product';
 import Link from 'next/link';
 
-const page = () => {
+function Page () {
     const [results, setResults] = useState([]);
     const searchParams = useSearchParams()
     const result = searchParams.get('q')
@@ -24,7 +24,7 @@ const page = () => {
         <div className='w-full h-auto grid grid-cols-4 px-10'>
           {results?.map((product)=> {
             return (
-              <ProductItem title={product?.title} desc={product?.category} brand={product?.brand} image={product?.images} productLink={product._id} />
+              <ProductItem key={product?.title} title={product?.title} desc={product?.category} brand={product?.brand} image={product?.images} productLink={product._id} />
             )
           })}
         </div>
@@ -32,4 +32,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
