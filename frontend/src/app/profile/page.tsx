@@ -1,13 +1,17 @@
-"use client";
-import Navbar from "@/components/Navbar";
+'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+// Define an interface representing the structure of a profile
+interface Profile {
+  fullName: string;
+  // Add other properties as needed
+}
 
 const Page = () => {
   const router = useRouter();
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
@@ -19,7 +23,6 @@ const Page = () => {
      console.log("Profile updated" + response.data);
     })();
   }, []);
-
 
   const handleLogout = () => {
     axios.post(`/api/auth/logout`).then((response) => {
