@@ -4,13 +4,20 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
 
+// Define an interface representing the structure of a product
+interface Product {
+  title: string;
+  brand: string;
+  // Add other properties as needed
+}
+
 const Page = ({ params }: { params: { slug: string } }) => {
-  const [product, setProduct] = useState(null)
+  const [product, setProduct] = useState<Product | null>(null); // Use the Product interface as the type
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const result = params.slug
+        const result = params.slug;
         const response = await axios.get(`/api/product/${result}`);
         setProduct(response.data);
         console.log("Product found:", response.data); // Log the updated product
@@ -45,3 +52,4 @@ const Page = ({ params }: { params: { slug: string } }) => {
 }
 
 export default Page;
+
