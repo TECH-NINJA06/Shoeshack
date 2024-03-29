@@ -6,7 +6,7 @@ import { useState } from "react";
 const ImageUpload = () => {
   const [avatar, setAvatar] = useState(null)
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: any) => {
     const file = event.target.files[0];
     setAvatar(file);
   };
