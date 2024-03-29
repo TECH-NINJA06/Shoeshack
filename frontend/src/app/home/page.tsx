@@ -32,7 +32,7 @@ export default function Home() {
             <div className="h-[88%] w-full grid grid-cols-3">
               {results?.map((product)=> {
                 return (
-                <ProductItem title={product?.title} desc={product?.category} brand={product?.brand} image={product?.images} productLink={product._id} />
+                <ProductItem key={product?.title} title={product?.title} desc={product?.category} brand={product?.brand} image={product?.images} productLink={product._id} />
               )})}
             </div>
           </div>
