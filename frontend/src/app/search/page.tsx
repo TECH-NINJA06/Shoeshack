@@ -5,8 +5,17 @@ import { useState, useEffect } from 'react'
 import { ProductItem } from '../components/Search/Product';
 import Link from 'next/link';
 
+interface Product {
+  _id: string;
+  title: string;
+  category: string;
+  brand: string;
+  images: string;
+  // Add other properties as needed
+}
+
 function Page () {
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState<Product[]>([]);
     const searchParams = useSearchParams()
     const result = searchParams.get('q')
     useEffect(() => {
