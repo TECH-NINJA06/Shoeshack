@@ -12,12 +12,9 @@ interface Profile {
 const Page = () => {
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
 
   useEffect(() => {
     (async () => {
-      console.log(id);
      const response = await axios.get(`/api/auth/profile`);
      setProfile(response.data)
      console.log("Profile updated" + response.data);

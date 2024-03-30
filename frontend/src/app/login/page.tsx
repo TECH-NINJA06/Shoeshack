@@ -27,7 +27,7 @@ function LoginPage() {
         const id = data.id;
         const fullname = data.fullName;
         toast.success("Login successful");
-        router.push(`/profile?id=${id}&name=${fullname}`);
+        router.push(`/profile/${id}`);
       }
       console.log(`"email" ${email}, "password" ${password}`);
     } catch (error) {

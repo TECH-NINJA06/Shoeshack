@@ -25,7 +25,7 @@ function Page () {
          setResults(response.data)
          console.log("search updated" + results);
         })();
-      }, []);
+      }, [result]);
   return (
     <div className='text-white'>
       <Link href={'/home'}>Back to home</Link>

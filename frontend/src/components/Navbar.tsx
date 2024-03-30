@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 // Define an interface representing the structure of a profile
 interface Profile {
   avatar?: string;
-  // Add other properties as needed
+  id: string;
 }
 
 const Navbar = () => {
@@ -60,7 +60,7 @@ const Navbar = () => {
                 <span>{cartItem}</span>
               </div>
             </Link>
-            <Link href={`/profile`} className="h-14 w-28 rounded-full">
+            <Link href={`/profile/${profile?.id}`} className="h-14 w-28 rounded-full">
               <div
                 className="size-full rounded-full bg-center bg-no-repeat bg-cover"
                 style={{
