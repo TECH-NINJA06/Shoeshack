@@ -2,14 +2,19 @@ import { connect } from "@/config/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Product from "@/models/product.models";
 
-const ignoredWords = ["shoes"]; // Add more words to ignore if needed
+const ignoredWords = ["%2Bshoes", "%2B"]; // Add more words to ignore if needed
 
 export async function GET({ params } : any) {
   try {
     // Connect to the database
     await connect();
 
-    let { slug } = params;
+    if (!params || !params.slug) {
+      console.log("No slug provided in the request");
+      return NextResponse.json({ message: "No relevant keyword provided", success: false }, { status: 400 });
+    }
+
+    let { slug } = await params;
     console.log('keyword:', slug);
 
     // Remove ignored words from the slug

@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const handleSearch = () => {
     console.log(search);
-    router.push(`/search?q=${search}`)
+    router.push(`/search/${search}`)
   };
 
   return (

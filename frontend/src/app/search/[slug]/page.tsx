@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react'
-import { ProductItem } from '../components/Search/Product';
+import { ProductItem } from '../../components/Search/Product';
 import Link from 'next/link';
 
 interface Product {
@@ -14,22 +14,24 @@ interface Product {
   // Add other properties as needed
 }
 
-function Page () {
+function Page ({ params }: { params: { slug: string } }) {
     const [results, setResults] = useState<Product[]>([]);
-    const searchParams = useSearchParams()
-    const result = searchParams.get('q')
+    // const searchParams = useSearchParams()
+    // const result = searchParams.get('q')
     useEffect(() => {
         (async () => {
-          console.log(results);
+          
+          const result = params.slug;
+          console.log(result);
          const response = await axios.get(`/api/search/${result}`);
          setResults(response.data)
          console.log("search updated" + results);
         })();
-      }, [result]);
+      }, [params.slug]);
   return (
     <div className='text-white'>
       <Link href={'/home'}>Back to home</Link>
-        <h1>Search results for: {result}</h1>
+        <h1>Search results for: {params.slug}</h1>
         <div className='w-full h-auto grid grid-cols-4 px-10'>
           {results?.map((product)=> {
             return (
