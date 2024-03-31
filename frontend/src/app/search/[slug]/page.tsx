@@ -19,15 +19,20 @@ function Page ({ params }: { params: { slug: string } }) {
     // const searchParams = useSearchParams()
     // const result = searchParams.get('q')
     useEffect(() => {
-        (async () => {
-          
+      const fetchProduct = async () => {
+        try {
           const result = params.slug;
           console.log(result);
-         const response = await axios.get(`/api/search/${result}`);
-         setResults(response.data)
-         console.log("search updated" + results);
-        })();
-      }, [params.slug]);
+          const response = await axios.get(`/api/search/${result}`);
+          setResults(response.data);
+          console.log("Products found:", response.data); // Log the updated product
+        } catch (error) {
+          console.error("Error fetching products:", error);
+        }
+      };
+  
+      fetchProduct();
+    }, [params.slug]);
   return (
     <div className='text-white'>
       <Link href={'/home'}>Back to home</Link>
