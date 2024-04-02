@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react'
 import { ProductItem } from '../../components/Search/Product';
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 interface Product {
   _id: string;
@@ -35,6 +36,7 @@ function Page ({ params }: { params: { slug: string } }) {
     }, [params.slug]);
   return (
     <div className='text-white'>
+      <Navbar />
       <Link href={'/home'}>Back to home</Link>
         <h1>Search results for: {params.slug}</h1>
         <div className='w-full h-auto grid grid-cols-4 px-10'>
