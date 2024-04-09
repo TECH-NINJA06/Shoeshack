@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const token = jwt.sign({ userId: savedUser._id }, "hola123", { expiresIn: '1d' });
+    const token = jwt.sign({ email: email }, "hola123", { expiresIn: '1d' });
     savedUser.access_token = token;
     await savedUser.save();
 

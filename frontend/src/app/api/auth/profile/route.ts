@@ -51,12 +51,12 @@ export async function GET(req: NextRequest) {
     const decodedToken = jwt.verify(token, 'hola123') as JwtPayload; // Explicitly type decodedToken
     console.log('id:', decodedToken);
 
-    if (!decodedToken.userId) {
+    if (!decodedToken.email) {
       return NextResponse.json({ message: "User not found", success: false }, { status: 404 });
     }
 
-    const userId = decodedToken.userId;
-    const user = await User.findOne({ _id: userId }).select("-password")
+    const userEmail = decodedToken.email;
+    const user = await User.findOne({ email: userEmail }).select("-password")
 
     if (!user) {
       return NextResponse.json({ message: "User not found", success: false }, { status: 404 });

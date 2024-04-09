@@ -46,7 +46,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
               <img
                 src={product?.images}
                 alt="product_image"
-                className="size-full"
+                className="size-auto max-h-full max-w-full"
               />
             </div>
           </div>
