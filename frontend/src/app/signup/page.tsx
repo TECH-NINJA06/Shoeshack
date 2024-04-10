@@ -33,7 +33,7 @@ function LoginPage() {
 
         toast.success("Signup successful");
 
-      router.push(`/profile?id=${id}&name=${fullname}`);
+      router.push(`/profile/${id}`);
       console.log(
         `"fullName" ${fullName}, "email" ${email}, "password" ${password}`
       );

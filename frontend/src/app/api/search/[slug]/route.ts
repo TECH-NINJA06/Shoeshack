@@ -2,7 +2,7 @@ import { connect } from "@/config/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Product from "@/models/product.models";
 
-const ignoredWords = ["%2Bshoes", "%2B"]; // Add more words to ignore if needed
+const ignoredWords = ["%2Bshoes", "%2B", "shoes"]; // Add more words to ignore if needed
 
 export async function GET(req: NextRequest, { params } : any) {
   try {
