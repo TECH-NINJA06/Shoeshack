@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ interface Product {
   brand: string;
   price: number;
   category: string;
-  sizes: [number];
+  sizes: number[];
   color: string;
 }
 
@@ -74,7 +75,9 @@ const Page = ({ params }: { params: { slug: string } }) => {
                       return (
                         <div
                           key={size}
-                          className={`hover:bg-gray-300 flex items-center justify-center rounded-xl w-10 cursor-pointer`}
+                          className={`hover:bg-gray-300 flex items-center justify-center rounded-xl w-10 cursor-pointer ${
+                            size === selectedSize ? "bg-slate-400" : ""
+                          }`}
                           onClick={() => handleDivClick(size)}
                         >
                           {size}
@@ -83,15 +86,19 @@ const Page = ({ params }: { params: { slug: string } }) => {
                     })}
                   </div>
                   <div className="flex justify-center items-center mt-10 gap-5">
-                     <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                    <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                    <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                      Add To Cart
-                    </span>
-                  </button>
-                  <Link href={`/search/${product.brand}`} className="text-md font-semibold text-slate-600">&#8592; Back To Search</Link>
+                    <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                      <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                      <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                        Add To Cart
+                      </span>
+                    </button>
+                    <Link
+                      href={`/search/${product.brand}`}
+                      className="text-md font-semibold text-slate-600"
+                    >
+                      &#8592; Back To Search
+                    </Link>
                   </div>
-                 
                 </div>
               </div>
             )}
