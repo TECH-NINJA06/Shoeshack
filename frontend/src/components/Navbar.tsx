@@ -1,4 +1,5 @@
 'use client'
+
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -13,22 +14,32 @@ interface Profile {
 }
 
 const Navbar = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
   const [cartItem, setCartItem] = useState(0);
 
   useEffect(() => {
     (async () => {
-     const response = await axios.get(`/api/home`);
-     setProfile(response.data)
-     console.log("Profile updated" + response.data);
+      try {
+        const response = await axios.get(`/api/home`);
+        setProfile(response.data);
+        console.log("Profile updated", response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
     })();
   }, []);
 
   const handleSearch = () => {
     console.log(search);
-    router.push(`/search/${search}`)
+    router.push(`/search/${search}`);
+  };
+
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
@@ -44,9 +55,9 @@ const Navbar = () => {
                 placeholder="  Search ShoeShack"
                 className="w-full text-base bg-[#0B1215] text-white border-none h-full"
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={handleInputKeyDown}
               />
             </div>
-
             <div className="search-icon w-14 h-9 rounded-full bg-red-500 ml-2 flex justify-center items-center">
               <FaSearch className="text-white " onClick={handleSearch} />
             </div>
