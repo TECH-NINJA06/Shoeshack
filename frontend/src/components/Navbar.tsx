@@ -7,7 +7,7 @@ import { IoCartOutline } from "react-icons/io5";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-// Define an interface representing the structure of a profile
+
 interface Profile {
   avatar?: string;
   id: string;
