@@ -36,7 +36,7 @@ export function ProductItem({
           {title}
         </p>
         <p className="text-slate-400">{desc} / {brand}</p>
-        <div className="flex justify-center items-center gap-2">
+        {/* <div className="flex justify-center items-center gap-2">
           <button
             className="rounded-full pl-4 pr-1 py-1 text-white flex gap-1 items-center space-x-1 bg-black mt-4 text-xs font-semibold dark:bg-zinc-800"
             onClick={() => {
@@ -48,13 +48,7 @@ export function ProductItem({
               <IoCartOutline />
             </span>
           </button>
-          {/* <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-semibold dark:bg-zinc-800" onClick={()=> {console.log(" open buy page")}}>
-            <span>Buy </span>
-            <span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-white">
-              $100
-            </span>
-          </button> */}
-        </div>
+        </div> */}
       </BackgroundGradient>
     </div>
     </Link>

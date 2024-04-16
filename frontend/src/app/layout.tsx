@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
 import { ThemeProvider } from "./components/Theme-provider";
 import { Toaster } from "react-hot-toast";
+// import { Provider } from "react-redux";
+// import { store } from "../lib/redux/store"
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],

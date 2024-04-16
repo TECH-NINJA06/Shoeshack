@@ -6,6 +6,7 @@ import { FaSearch } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useSelector } from 'react-redux';
 
 
 interface Profile {
@@ -19,6 +20,7 @@ const Navbar = () => {
   const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
   const [cartItem, setCartItem] = useState(0);
 
+  const cartItems = useSelector(state => state.cartItems)
   useEffect(() => {
     (async () => {
       try {
@@ -68,7 +70,7 @@ const Navbar = () => {
             <Link href="/cart" className="size-full">
               <div className="h-[90%] w-full flex justify-center items-center pt-3">
                 <IoCartOutline className="size-[80%]" />
-                <span>{cartItem}</span>
+                <span>{cartItems.length > 0 ? cartItems.length : cartItem }</span>
               </div>
             </Link>
             <Link href={`/profile/${profile?.id}`} className="h-14 w-28 rounded-full">
