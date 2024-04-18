@@ -36,31 +36,29 @@ export default function Home() {
 
   return (
     <>
-      <Provider store={store}>
-        <Navbar />
-        <div className="flex justify-center items-center min-h-screen w-screen overflow-y-scroll overflow-x-hidden">
-          <div className="h-[90vh] w-full">
-            <HeroCarousal />
-            <div className="h-screen w-screen mt-40 flex flex-col justify-between items-center px-10 text-white">
-              <div className="h-[10%] w-full text-4xl font-semibold">
-                <h2>Check Out our Products</h2>
-              </div>
-              <div className="h-[88%] w-full grid grid-cols-3 pl-28">
-                {results?.map((product) => (
-                  <ProductItem
-                    key={product._id}
-                    title={product.title}
-                    desc={product.category}
-                    brand={product.brand}
-                    image={product.images}
-                    productLink={product._id}
-                  />
-                ))}
-              </div>
+      <Navbar />
+      <div className="flex justify-center items-center min-h-screen w-screen overflow-y-scroll overflow-x-hidden">
+        <div className="h-[90vh] w-full">
+          <HeroCarousal />
+          <div className="h-screen w-screen mt-40 flex flex-col justify-between items-center px-10 text-white">
+            <div className="h-[10%] w-full text-4xl font-semibold">
+              <h2>Check Out our Products</h2>
+            </div>
+            <div className="h-[88%] w-full grid grid-cols-3 pl-28">
+              {results?.map((product) => (
+                <ProductItem
+                  key={product._id}
+                  title={product.title}
+                  desc={product.category}
+                  brand={product.brand}
+                  image={product.images}
+                  productLink={product._id}
+                />
+              ))}
             </div>
           </div>
         </div>
-      </Provider>
+      </div>
     </>
   );
 }
