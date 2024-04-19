@@ -16,8 +16,7 @@ export async function GET(req: NextRequest, { params } : any) {
       console.log("No product found");
       return NextResponse.json({ message: "No products found", success: true }, { status: 404 });
     }
-    
-    console.log(product)
+
     return NextResponse.json(product, { status: 200 });
   } catch (error) {
     // Handle errors
