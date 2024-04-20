@@ -79,19 +79,29 @@ const Page = ({ params }: { params: { slug: string } }) => {
   };
   const handleRemoveCart = (e: any) => { 
     e.preventDefault();
-
-    const item = {
-      id: params.slug,
-      function: 'subtract'
-    };
-
-    if (existingProduct.quantity == 1) {
-      dispatch(removeCart(item.id));
-    } else if(existingProduct.quantity > 1){
-      dispatch(updateCart(item))
+  
+    // Find the index of the item in the cartItems array
+    const itemIndex = cartItems.findIndex((item) => item.id === params.slug && item.size === selectedSize);
+  
+    // If itemIndex is not -1, it means the item exists in the cart
+    if (itemIndex !== -1) {
+      if (cartItems[itemIndex].quantity === 1) {
+        const removeItem = {
+          id: params.slug,
+          size: selectedSize
+        }
+        dispatch(removeCart(removeItem));
+      } else {
+        const item = {
+          id: params.slug,
+          size: selectedSize,
+          function: 'subtract'
+        };
+        dispatch(updateCart(item));
+      }
     }
-    dispatch(removeCart(params.slug));
   };
+  
   const addUpdateCart = (e: any) => {
     e.preventDefault();
   
