@@ -94,12 +94,12 @@ const Page = ({ params }: { params: { slug: string } }) => {
   };
   const addUpdateCart = (e: any) => {
     e.preventDefault();
-
+  
     if (selectedSize === null) {
       console.log("Please select a size before adding to cart.");
       return;
     }
-
+  
     const item = {
       id: params.slug,
       title: product?.title,
@@ -107,22 +107,24 @@ const Page = ({ params }: { params: { slug: string } }) => {
       size: selectedSize,
       brand: product?.brand,
     };
-
-    const existingCartItem = cartItems.find((item) => item.id === params.slug);
-
-    if (existingCartItem.size == selectedSize) {
-      console.log("Size already added")
+  
+    const existingCartItem = cartItems.find((item) => item.id === params.slug && item.size === selectedSize);
+    console.log(existingCartItem);
+  
+    if (existingCartItem) {
+      console.log("Item with selected size already exists in the cart");
       const existItem = {
         id: params.slug,
-        function: 'add'
-      }
-      dispatch(updateCart(existItem))
+        size: selectedSize,
+        function: "add",
+      };
+      dispatch(updateCart(existItem));
     } else {
-      console.log("size does not match existing")
-      dispatch(addCart(item))
+      console.log("Item with selected size not found in the cart, adding new item");
+      dispatch(addCart(item));
     }
-
-  }
+  };
+  
 
   return (
     <div className="h-screen w-screen bg-slate-100 bg-center flex flex-col justify-center items-center">
