@@ -17,7 +17,7 @@ interface Profile {
 const Navbar = () => {
   const router = useRouter();
   const [search, setSearch] = useState("");
-  const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [cartItem, setCartItem] = useState(0);
 
   const cartItems = useSelector(state => state.cartItems)

@@ -3,11 +3,14 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "@/lib/redux/store";
-import { addCart } from "@/lib/redux/features/slices/cart/cartSlice";
+import { addCart, removeCart, updateCart } from "@/lib/redux/features/slices/cart/cartSlice";
+import { IoIosAdd } from "react-icons/io";
+import { LuMinus } from "react-icons/lu";
 
 interface Product {
+  id: string;
   title: string;
   images: string;
   brand: string;
@@ -20,6 +23,7 @@ interface Product {
 const Page = ({ params }: { params: { slug: string } }) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [cartProduct, setCartProduct] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,12 +41,30 @@ const Page = ({ params }: { params: { slug: string } }) => {
     fetchProduct();
   }, [params.slug]);
 
+  const cartItems = useSelector((state) => state?.cartItems);
+  const existingProduct = cartItems.find(
+    (product) => product.id === params.slug
+  );
+
+  useEffect(() => {
+    if (existingProduct) {
+      console.log("Product with ID", params.slug, "exists in the store");
+      setCartProduct(true);
+    } else {
+      console.log(
+        "Product with ID",
+        params.slug,
+        "does not exist in the store"
+      );
+    }
+  }, [cartItems, existingProduct, params.slug]);
+
   const handleDivClick = (size: number) => {
     setSelectedSize(size);
     console.log("The selected size is: " + size);
   };
 
-  const handleCart = (e: any) => {
+  const handleAddCart = (e: any) => {
     e.preventDefault();
 
     const item = {
@@ -55,6 +77,52 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
     dispatch(addCart(item));
   };
+  const handleRemoveCart = (e: any) => { 
+    e.preventDefault();
+
+    const item = {
+      id: params.slug,
+      function: 'subtract'
+    };
+
+    if (existingProduct.quantity == 1) {
+      dispatch(removeCart(item.id));
+    } else if(existingProduct.quantity > 1){
+      dispatch(updateCart(item))
+    }
+    dispatch(removeCart(params.slug));
+  };
+  const addUpdateCart = (e: any) => {
+    e.preventDefault();
+
+    if (selectedSize === null) {
+      console.log("Please select a size before adding to cart.");
+      return;
+    }
+
+    const item = {
+      id: params.slug,
+      title: product?.title,
+      itemImg: product?.images,
+      size: selectedSize,
+      brand: product?.brand,
+    };
+
+    const existingCartItem = cartItems.find((item) => item.id === params.slug);
+
+    if (existingCartItem.size == selectedSize) {
+      console.log("Size already added")
+      const existItem = {
+        id: params.slug,
+        function: 'add'
+      }
+      dispatch(updateCart(existItem))
+    } else {
+      console.log("size does not match existing")
+      dispatch(addCart(item))
+    }
+
+  }
 
   return (
     <div className="h-screen w-screen bg-slate-100 bg-center flex flex-col justify-center items-center">
@@ -104,15 +172,27 @@ const Page = ({ params }: { params: { slug: string } }) => {
                     })}
                   </div>
                   <div className="flex justify-center items-center mt-10 gap-5">
-                    <button
-                      className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-                      onClick={handleCart}
-                    >
-                      <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                      <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                        Add To Cart
-                      </span>
-                    </button>
+                    {cartProduct ? (
+                      <div className="flex justify-between items-center h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                        <button onClick={handleRemoveCart}>
+                          <LuMinus />
+                        </button>
+                        <button onClick={addUpdateCart}>
+                        <IoIosAdd />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                        onClick={handleAddCart}
+                      >
+                        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />             
+                        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                          Add To Cart
+                        </span>
+                      </button>
+                    )}
+
                     <Link
                       href={`/search/${product.brand}`}
                       className="text-md font-semibold text-slate-600"
