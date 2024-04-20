@@ -79,27 +79,37 @@ const Page = ({ params }: { params: { slug: string } }) => {
   };
   const handleRemoveCart = (e: any) => { 
     e.preventDefault();
-
-    const item = {
-      id: params.slug,
-      function: 'subtract'
-    };
-
-    if (existingProduct.quantity == 1) {
-      dispatch(removeCart(item.id));
-    } else if(existingProduct.quantity > 1){
-      dispatch(updateCart(item))
+  
+    // Find the index of the item in the cartItems array
+    const itemIndex = cartItems.findIndex((item) => item.id === params.slug && item.size === selectedSize);
+  
+    // If itemIndex is not -1, it means the item exists in the cart
+    if (itemIndex !== -1) {
+      if (cartItems[itemIndex].quantity === 1) {
+        const removeItem = {
+          id: params.slug,
+          size: selectedSize
+        }
+        dispatch(removeCart(removeItem));
+      } else {
+        const item = {
+          id: params.slug,
+          size: selectedSize,
+          function: 'subtract'
+        };
+        dispatch(updateCart(item));
+      }
     }
-    dispatch(removeCart(params.slug));
   };
+  
   const addUpdateCart = (e: any) => {
     e.preventDefault();
-
+  
     if (selectedSize === null) {
       console.log("Please select a size before adding to cart.");
       return;
     }
-
+  
     const item = {
       id: params.slug,
       title: product?.title,
@@ -107,22 +117,24 @@ const Page = ({ params }: { params: { slug: string } }) => {
       size: selectedSize,
       brand: product?.brand,
     };
-
-    const existingCartItem = cartItems.find((item) => item.id === params.slug);
-
-    if (existingCartItem.size == selectedSize) {
-      console.log("Size already added")
+  
+    const existingCartItem = cartItems.find((item) => item.id === params.slug && item.size === selectedSize);
+    console.log(existingCartItem);
+  
+    if (existingCartItem) {
+      console.log("Item with selected size already exists in the cart");
       const existItem = {
         id: params.slug,
-        function: 'add'
-      }
-      dispatch(updateCart(existItem))
+        size: selectedSize,
+        function: "add",
+      };
+      dispatch(updateCart(existItem));
     } else {
-      console.log("size does not match existing")
-      dispatch(addCart(item))
+      console.log("Item with selected size not found in the cart, adding new item");
+      dispatch(addCart(item));
     }
-
-  }
+  };
+  
 
   return (
     <div className="h-screen w-screen bg-slate-100 bg-center flex flex-col justify-center items-center">

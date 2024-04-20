@@ -23,11 +23,14 @@ export const cartSlice = createSlice({
             state.cartItems.push(item);
         },
         removeCart: (state, action) => {
-            state.cartItems.filter(item => item.id !== action.payload.id);
+          const itemIndex = state.cartItems.findIndex(
+            (item) => item.id === action.payload.id && item.size === action.payload.size
+          );
+          state.cartItems.splice(itemIndex, 1);
         },
         updateCart: (state, action) => {
             const itemIndex = state.cartItems.findIndex(
-                (item) => item.id === action.payload.id
+                (item) => item.id === action.payload.id && item.size === action.payload.size
               );
             if (action.payload.function === 'add') {
               state.cartItems[itemIndex].quantity += 1

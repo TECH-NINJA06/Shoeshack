@@ -18,25 +18,27 @@ export function ProductItem({
   desc,
   image,
   brand,
-  productLink
+  productLink,
 }: PageHeadProps) {
   return (
-    <Link className="w-80 h-[40rem]" href={`/product/${productLink}`}>
-    <div className="w-80 h-[40rem]">
-      <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900 flex flex-col items-center">
-        <div className=" w-[18rem] h-[15rem] bg-center object-contain rounded-xl">
-          <img
-          src={image}
-          alt={title}
-          className="object-contain size-full aspect-video"
-        />
-        </div>
-        
-        <p className="text-sm font-semibold sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
-          {title}
-        </p>
-        <p className="text-slate-400">{desc} / {brand}</p>
-        {/* <div className="flex justify-center items-center gap-2">
+    <Link className="w-80 min-h-[40rem]" href={`/product/${productLink}`}>
+      <div className="w-80 min-h-[40rem]">
+        <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900 flex flex-col items-center">
+          <div className=" w-[18rem] h-[15rem] bg-center object-contain rounded-xl">
+            <img
+              src={image}
+              alt={title}
+              className="object-contain size-full aspect-video"
+            />
+          </div>
+
+          <p className="text-sm font-semibold sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
+            {title}
+          </p>
+          <p className="text-slate-400">
+            {desc} / {brand}
+          </p>
+          {/* <div className="flex justify-center items-center gap-2">
           <button
             className="rounded-full pl-4 pr-1 py-1 text-white flex gap-1 items-center space-x-1 bg-black mt-4 text-xs font-semibold dark:bg-zinc-800"
             onClick={() => {
@@ -49,8 +51,8 @@ export function ProductItem({
             </span>
           </button>
         </div> */}
-      </BackgroundGradient>
-    </div>
+        </BackgroundGradient>
+      </div>
     </Link>
   );
 }
