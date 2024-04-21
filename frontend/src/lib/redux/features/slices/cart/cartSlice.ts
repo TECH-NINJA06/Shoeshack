@@ -19,6 +19,7 @@ export const cartSlice = createSlice({
     name: 'cartItem',
     initialState: initialState,
     reducers: {
+      //action.payload is sent from frontend while state is the value present in the store
         addCart: (state, action) => {
             const item: CartItem = {
                 id: action.payload.id,
