@@ -84,6 +84,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
       itemImg: product?.images,
       size: selectedSize,
       brand: product?.brand,
+      price: product?.price
     };
 
     dispatch(addCart(item));

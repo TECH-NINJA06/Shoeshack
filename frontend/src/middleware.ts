@@ -26,6 +26,7 @@ export const config = {
     '/login',
     '/home',
     '/search',
-    '/product'
+    '/product',
+    '/cart'
     ]
 }

@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 interface CartItem {
   id: string;
@@ -36,12 +37,31 @@ const page = () => {
     <div className="size-full">
       <Navbar />
       <div className="w-full h-[90vh] px-20 text-white flex justify-center items-center">
-        <div className="h-full w-[60%] border-r border-white flex flex-col justify-center items-center">
+        <div className="h-full w-[60%] border-r border-white flex flex-col justify-center items-center px-10">
           <div className="w-full h-20 flex items-center border-b border-white">
             <h1 className="font-semibold text-xl">Shopping Cart</h1>
           </div>
-          <div className="w-full h-20 flex justify-between items-center border-b border-white">
-            <p className="text-slate-300"></p>
+          <div className="w-full h-20 flex justify-end gap-10 items-center border-b border-white pr-14">
+            <p className="text-slate-300">Product</p>
+            <p className="text-slate-300">Price</p>
+            <p className="text-slate-300">Quantity</p>
+            <p className="text-slate-300">SubTotal</p>
+          </div>
+          <div className="w-full h-72 overflow-y-scroll flex flex-col items-center border-b border-white pr-10 my-5 gap-2">
+            {/* {cartItems.map((cartItem) => {
+              return (
+                <div className="w-full h-[50%] bg-red-200">
+                  {cartItem.title}
+                </div>
+              );
+            })} */}
+            <div className="w-full h-[45%] bg-red-200 flex gap-4 items-center justify-between">
+                {/* <RiDeleteBin5Line className="text-white"/> */}
+                <div className="h-full w-[40%] bg-black"></div>
+                <div className="h-full w-[53%] bg-black flex items-center">
+
+                </div>
+            </div>
           </div>
         </div>
         <div className="h-full w-[40%] flex flex-col justify-center items-center px-10">

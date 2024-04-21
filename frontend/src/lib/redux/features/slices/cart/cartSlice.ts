@@ -7,6 +7,7 @@ interface CartItem {
   size: number;
   brand: string;
   quantity: number;
+  price: number;
 }
 
 
@@ -27,6 +28,7 @@ export const cartSlice = createSlice({
                 itemImg: action.payload.itemImg,
                 size: action.payload.size,
                 brand: action.payload.brand,
+                price: action.payload.price,
                 quantity: 1
             }
             state.cartItems.push(item);
