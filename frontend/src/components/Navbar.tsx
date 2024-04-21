@@ -13,6 +13,18 @@ interface Profile {
   avatar?: string;
   id: string;
 }
+interface CartItem {
+  id: string;
+  title: string;
+  image: string;
+  brand: string;
+  price: number;
+  size: number;
+  quantity: number;
+}
+interface RootState {
+  cartItems: CartItem[];
+}
 
 const Navbar = () => {
   const router = useRouter();
@@ -20,7 +32,7 @@ const Navbar = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [cartItem, setCartItem] = useState(0);
 
-  const cartItems = useSelector(state => state.cartItems)
+  const cartItems = useSelector((state: RootState) => state.cartItems);
   useEffect(() => {
     (async () => {
       try {
