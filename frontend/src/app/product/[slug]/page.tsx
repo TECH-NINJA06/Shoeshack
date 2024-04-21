@@ -3,8 +3,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import { store } from "@/lib/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { addCart, removeCart, updateCart } from "@/lib/redux/features/slices/cart/cartSlice";
 import { IoIosAdd } from "react-icons/io";
 import { LuMinus } from "react-icons/lu";
@@ -18,6 +17,18 @@ interface Product {
   category: string;
   sizes: number[];
   color: string;
+}
+interface CartItem {
+  id: string;
+  title: string;
+  image: string;
+  brand: string;
+  price: number;
+  size: number;
+  quantity: number;
+}
+interface RootState {
+  cartItems: CartItem[];
 }
 
 const Page = ({ params }: { params: { slug: string } }) => {
@@ -41,7 +52,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
     fetchProduct();
   }, [params.slug]);
 
-  const cartItems = useSelector((state) => state?.cartItems);
+  const cartItems = useSelector((state: RootState) => state.cartItems);
   const existingProduct = cartItems.find(
     (product) => product.id === params.slug
   );
