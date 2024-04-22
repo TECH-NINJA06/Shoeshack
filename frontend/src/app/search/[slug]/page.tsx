@@ -19,12 +19,14 @@ interface Product {
 
 function Page({ params }: { params: { slug: string } }) {
   const [results, setResults] = useState<Product[]>([]);
-  // const searchParams = useSearchParams()
-  // const result = searchParams.get('q')
+ 
+  const result = params.slug;
+  let slug = params.slug.replace("%20", " ")
+
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const result = params.slug;
         console.log(result);
         const response = await axios.get(`/api/search/${result}`);
         setResults(response.data);
@@ -42,7 +44,7 @@ function Page({ params }: { params: { slug: string } }) {
         <Navbar />
         <div className="mt-7 flex flex-col gap-5">
           <Link href={"/home"} className="mx-2">&#8592; Back To Home</Link>
-        <h1 className="text-2xl font-bold border-b mx-5">Search results for: {params.slug}</h1>
+        <h1 className="text-2xl font-bold border-b mx-5">Search results for: {slug}</h1>
         <div className="w-full h-auto grid grid-cols-4 px-10 mt-5">
           {results?.map((product) => {
             return (
