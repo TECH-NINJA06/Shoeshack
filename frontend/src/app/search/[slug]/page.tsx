@@ -40,9 +40,10 @@ function Page({ params }: { params: { slug: string } }) {
     <Provider store={store}>
       <div className="text-white">
         <Navbar />
-        <Link href={"/home"}>Back to home</Link>
-        <h1>Search results for: {params.slug}</h1>
-        <div className="w-full h-auto grid grid-cols-4 px-10">
+        <div className="mt-7 flex flex-col gap-5">
+          <Link href={"/home"} className="mx-2">&#8592; Back To Home</Link>
+        <h1 className="text-2xl font-bold border-b mx-5">Search results for: {params.slug}</h1>
+        <div className="w-full h-auto grid grid-cols-4 px-10 mt-5">
           {results?.map((product) => {
             return (
               <ProductItem
@@ -56,6 +57,8 @@ function Page({ params }: { params: { slug: string } }) {
             );
           })}
         </div>
+        </div>
+        
       </div>
     </Provider>
   );

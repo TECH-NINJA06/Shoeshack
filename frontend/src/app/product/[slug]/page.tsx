@@ -116,8 +116,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
       }
     }
     toast.success("Item removed from cart")
-  };
-  
+  }; 
   const addUpdateCart = (e: any) => {
     e.preventDefault();
   
