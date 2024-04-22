@@ -18,7 +18,7 @@ interface RootState {
   cartItems: CartItem[];
 }
 
-const page = () => {
+function Page () {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartItems);
 
@@ -94,4 +94,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
