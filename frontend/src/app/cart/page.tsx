@@ -37,7 +37,7 @@ function Page() {
 
   const handleDeleteCart = (productId: string) => {
     dispatch(removeCart(productId));
-  }
+  };
 
   return (
     <div className="size-full">
@@ -60,7 +60,10 @@ function Page() {
                   ? cartItem.title.substring(0, 8) + "..."
                   : cartItem.title;
               return (
-                <div className="w-full h-[45%] flex gap-4 items-center justify-between border-b">
+                <div
+                  className="w-full h-[45%] flex gap-4 items-center justify-between border-b"
+                  key={cartItem.id}
+                >
                   <div className="h-full w-[40%]  flex gap-16 items-center px-2">
                     <button onClick={() => handleDeleteCart(cartItem.id)}>
                       <RiDeleteBin5Line className="text-white" />
