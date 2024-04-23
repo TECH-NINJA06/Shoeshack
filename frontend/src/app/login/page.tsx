@@ -19,9 +19,10 @@ function LoginPage() {
         email,
         password
       })
-
+      console.log(response);
+      const data = response.data;
       if (response.status === 200) {
-        const data = response.data;
+
         const token = data.token;
         console.log(token);
 
@@ -29,15 +30,10 @@ function LoginPage() {
         const fullname = data.fullName;
         toast.success("Login successful");
         router.push(`/profile/${id}`);
-      } else if (response.status === 422) {
-        toast.error("All fields are required");
-      } else if (response.status === 409) {
-        toast.error("User does not exist, Please check credentials");
       }
-
     } catch (error) {
       console.log(error);
-      toast.error("Error while loggin in");
+      toast.error("Please check details");
       setLoading(false)
     } finally {
       setLoading(false)

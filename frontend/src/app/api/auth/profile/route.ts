@@ -49,7 +49,6 @@ export async function GET(req: NextRequest) {
     }
 
     const decodedToken = jwt.verify(token, 'hola123') as JwtPayload; // Explicitly type decodedToken
-    console.log('id:', decodedToken);
 
     if (!decodedToken.email) {
       return NextResponse.json({ message: "User not found", success: false }, { status: 404 });
@@ -64,7 +63,9 @@ export async function GET(req: NextRequest) {
 
     const avatar = user.avatar || '/navAvatar.jpg';
 
-    return NextResponse.json({ id: user._id, fullName: user.fullName, avatar: avatar }, { status: 200 });
+    const response = NextResponse.json({ id: user._id, fullName: user.fullName, avatar: avatar }, { status: 200 });
+    console.log(response);
+    return response;
   } catch (error) {
     console.error("Error at profile route:", error);
     return NextResponse.json({ message: "Internal server error", success: false }, { status: 500 });

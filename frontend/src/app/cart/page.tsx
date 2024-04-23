@@ -5,6 +5,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { removeCart } from "@/lib/redux/features/slices/cart/cartSlice";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface CartItem {
   id: string;
@@ -20,6 +22,7 @@ interface RootState {
 }
 
 function Page() {
+  const router = useRouter()
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartItems);
   console.log(cartItems);
@@ -38,6 +41,13 @@ function Page() {
   const handleDeleteCart = (productId: string) => {
     dispatch(removeCart(productId));
   };
+
+  function handleCheckout() {
+    if (cartItems.length === 0) {
+      toast.error("Please select a product");
+    }
+    router.push('/checkout');
+  }
 
   return (
     <div className="size-full">
@@ -68,13 +78,15 @@ function Page() {
                     <button onClick={() => handleDeleteCart(cartItem.id)}>
                       <RiDeleteBin5Line className="text-white" />
                     </button>
-                    <div className="h-[95%] w-52 flex justify-center items-center">
+                    <Link href={`/product/${cartItem.id}`} className="h-[95%] w-52 flex justify-center items-center">
+                      <div className="size-full flex justify-center items-center">
                       <img
                         src={cartItem.itemImg}
                         alt="item_Img"
                         className="size-auto max-h-full"
                       />
                     </div>
+                    </Link>
                   </div>
                   <div className="h-full w-[53%] flex items-center gap-2">
                     <p>{truncatedTitle}</p>
@@ -103,14 +115,14 @@ function Page() {
             <h4>Total</h4>
             <p className="text-slate-300">₹{calculateTotalPrice()}</p>
           </div>
-          <Link
-            href={"/checkout"}
+          <button
+            onClick={handleCheckout}
             className="w-full h-14 rounded flex justify-between items-center mt-20 bg-white"
           >
             <div className="size-full flex items-center justify-center text-[#0B1215] font-semibold">
               Proceed to Checkout
             </div>
-          </Link>
+          </button>
         </div>
       </div>
     </div>

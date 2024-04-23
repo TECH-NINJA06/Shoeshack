@@ -223,10 +223,10 @@ const Page = ({ params }: { params: { slug: string } }) => {
                     )}
 
                     <Link
-                      href={`/search/${product.brand}`}
+                      href={`/cart`}
                       className="text-md font-semibold text-slate-600"
                     >
-                      &#8592; Back To Search
+                      Go to Cart
                     </Link>
                   </div>
                 </div>
