@@ -1,6 +1,7 @@
 'use server'
 import mongoose from "mongoose";
 
+//Using use server as layout.tsx is made client for redux toolkit
 export async function connect() {
     try {
         await mongoose.connect(process.env.MONGO_URI!);
