@@ -14,7 +14,6 @@ interface Product {
   category: string;
   brand: string;
   images: string;
-  // Add other properties as needed
 }
 
 function Page({ params }: { params: { slug: string } }) {
@@ -30,7 +29,7 @@ function Page({ params }: { params: { slug: string } }) {
         console.log(result);
         const response = await axios.get(`/api/search/${result}`);
         setResults(response.data);
-        console.log("Products found:", response.data); // Log the updated product
+        console.log("Products found:", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
