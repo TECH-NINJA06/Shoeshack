@@ -1,12 +1,13 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { removeCart } from "@/lib/redux/features/slices/cart/cartSlice";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface CartItem {
   id: string;
@@ -42,11 +43,15 @@ function Page() {
     dispatch(removeCart(productId));
   };
 
-  function handleCheckout() {
+  async function handleCheckout() {
     if (cartItems.length === 0) {
       toast.error("Please select a product");
+      return;
     }
-    router.push('/checkout');
+    const response = await axios.post("/api/checkout", {
+      items: cartItems
+    });
+    router.push(`${response.data.session_url}`)
   }
 
   return (
