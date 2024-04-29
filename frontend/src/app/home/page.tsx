@@ -14,11 +14,10 @@ interface Product {
   category: string;
   brand: string;
   images: string;
-  // Add other properties as needed
 }
 
 export default function Home() {
-  const [results, setResults] = useState<Product[]>([]); // Use the Product interface as the type
+  const [results, setResults] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,10 +40,10 @@ export default function Home() {
         <div className="h-[90vh] w-full">
           <HeroCarousal />
           <div className="h-screen w-screen mt-40 flex flex-col justify-between items-center px-10 text-white">
-            <div className="h-[10%] w-full text-4xl font-semibold">
+            <div className="h-[10%] w-full md:text-4xl sm:text-3xl md:leading-[0] leading-6 font-semibold">
               <h2>Check Out our Products</h2>
             </div>
-            <div className="h-[88%] w-full grid grid-cols-3 pl-28">
+            <div className="h-[88%] w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 md:pl-28">
               {results?.map((product) => (
                 <ProductItem
                   key={product._id}
