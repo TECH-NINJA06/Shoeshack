@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
+const cartItemSchema = new Schema({
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  },
+  size: {
+    type: Number,
+  },
+  quantity: {
+    type: Number,
+  },
+});
+
 const userSchema = new Schema(
     {
       fullName: {
@@ -22,6 +35,7 @@ const userSchema = new Schema(
       access_token: {
         type: String
       },
+      cart: [cartItemSchema]
     },
     {
       timestamps: true,
