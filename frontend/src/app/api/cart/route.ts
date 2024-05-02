@@ -56,7 +56,8 @@ export async function POST(req: NextRequest) {
 
     // Find the index of the cart item with the specified product ID and size
     const cartItemIndex = savedUser.cart.findIndex(
-      (item: any) => item.product.toString() === productId && item.size === productSize
+      (item: any) =>
+        item.product.toString() === productId && item.size === productSize
     );
 
     if (cartItemIndex !== -1) {
@@ -132,7 +133,8 @@ export async function DELETE(req: NextRequest) {
 
     // Find the index of the cart item with the specified product ID and size
     const cartItemIndex = savedUser.cart.findIndex(
-      (item: any) => item.product.toString() === productId && item.size === productSize
+      (item: any) =>
+        item.product.toString() === productId && item.size === productSize
     );
 
     // If the item exists in the cart, remove it
@@ -140,7 +142,7 @@ export async function DELETE(req: NextRequest) {
       savedUser.cart.splice(cartItemIndex, 1);
       await savedUser.save();
 
-        console.log(savedUser.cart);
+      console.log(savedUser.cart);
 
       return NextResponse.json({
         message: "Product removed from cart",
@@ -152,6 +154,63 @@ export async function DELETE(req: NextRequest) {
         { status: 404 }
       );
     }
+  } catch (error) {
+    console.error("Error at cart controller:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    await connect();
+    const { productId, productSize } = await req.json();
+
+    if (!productId || !productSize) {
+      console.log("Please enter all fields");
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 422 }
+      );
+    }
+
+    const token = req.cookies.get("token")?.value;
+    if (!token) {
+      return NextResponse.json(
+        { message: "Token not found", success: false },
+        { status: 401 }
+      );
+    }
+    const decodedToken = jwt.verify(token, "hola123") as JwtPayload;
+    if (!decodedToken.email) {
+      return NextResponse.json(
+        { message: "User not found", success: false },
+        { status: 404 }
+      );
+    }
+    const userEmail = decodedToken.email;
+
+    const savedUser = await User.findOne({ email: userEmail }).select(
+      "-password"
+    );
+    if (!savedUser) {
+      return NextResponse.json(
+        { message: "User not found", success: false },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        userId: savedUser._id,
+        cart: savedUser.cart,
+        message: "User cart sent successfully",
+        success: true,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error at cart controller:", error);
     return NextResponse.json(
