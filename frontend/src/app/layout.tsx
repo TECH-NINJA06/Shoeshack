@@ -7,6 +7,8 @@ import { ThemeProvider } from "./components/Theme-provider";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "../lib/redux/store";
+import { Suspense } from "react";
+import loading from "@/app/loading";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -37,8 +39,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Suspense fallback={loading}>
           <Toaster />
           <Provider store={store}>{children}</Provider>
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>
