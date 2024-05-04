@@ -4,10 +4,7 @@ import { useState, useEffect } from "react";
 import { HeroCarousal } from "../../components/HeroCarousal";
 import Navbar from "@/components/Navbar";
 import { ProductItem } from "../components/Search/Product";
-import { Provider } from "react-redux";
-import { store } from "@/lib/redux/store";
 
-// Define an interface representing the structure of a product
 interface Product {
   _id: string;
   title: string;

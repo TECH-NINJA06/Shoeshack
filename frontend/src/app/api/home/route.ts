@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: "Token not found", success: false }, { status: 401 });
     }
 
-    const decodedToken = jwt.verify(token, 'hola123') as JwtPayload; // Explicitly type decodedToken
+    const decodedToken = jwt.verify(token, 'hola123') as JwtPayload;
     console.log('id:', decodedToken);
 
     if (!decodedToken.email) {
