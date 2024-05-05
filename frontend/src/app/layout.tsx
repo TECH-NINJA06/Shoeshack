@@ -7,6 +7,12 @@ import { ThemeProvider } from "./components/Theme-provider";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "../lib/redux/store";
+<<<<<<< Updated upstream
+=======
+import { Suspense } from "react";
+import loading from "@/app/loading";
+import { SessionProvider } from "next-auth/react";
+>>>>>>> Stashed changes
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -21,11 +27,13 @@ const metaData= {
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
+
     <html lang="en" suppressHydrationWarning>
       <head>
         <title>{metaData.title}</title>
@@ -37,8 +45,19 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+<<<<<<< Updated upstream
           <Toaster />
           <Provider store={store}>{children}</Provider>
+=======
+          <SessionProvider>
+            <Suspense fallback={loading()}>
+              <Toaster />
+              <Provider store={store}>
+                {children}
+              </Provider>
+            </Suspense>
+          </SessionProvider>
+>>>>>>> Stashed changes
         </ThemeProvider>
       </body>
     </html>
