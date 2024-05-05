@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
@@ -7,10 +7,24 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 function LoginPage() {
+  const session = useSession();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  
+  useEffect(() => {
+    if (session.status === "loading") {
+      setLoading(true);
+    } else if (session.status === "authenticated") {
+      console.log(session)
+      router.push('/profile');
+    } else if (session.status === "unauthenticated") {
+      toast.error("Please check details");
+      setLoading(false);
+    }
+  }, [session]);
 
   const handleSubmit = async () => {
     try {
@@ -86,7 +100,7 @@ function LoginPage() {
               <div className="h-10 w-40 bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
                 <button
                   className="h-full w-full border flex justify-center items-center gap-1 border-slate-700 rounded-lg text-slate-200 hover:border-slate-500 hover:text-slate-300 hover:shadow transition duration-150"
-                  onClick={() => signIn("google")}
+                  onClick={()=>signIn("google")}
                 >
                   <img
                     className="w-6 h-6"
