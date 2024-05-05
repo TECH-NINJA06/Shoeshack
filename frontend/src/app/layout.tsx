@@ -39,7 +39,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Suspense fallback={loading}>
+          <Suspense fallback={loading()}>
           <Toaster />
           <Provider store={store}>{children}</Provider>
           </Suspense>
