@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCart, removeCart, updateCart } from "@/lib/redux/features/slices/cart/cartSlice";
 import { IoIosAdd } from "react-icons/io";
 import { LuMinus } from "react-icons/lu";
+import toast from "react-hot-toast";
 
 interface Product {
   id: string;
@@ -54,7 +55,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const existingProduct = cartItems.find(
-    (product) => product.id === params.slug
+    (product) => product.id === params.slug && product.size === selectedSize
   );
 
   useEffect(() => {
@@ -67,6 +68,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
         params.slug,
         "does not exist in the store"
       );
+      setCartProduct(false);
     }
   }, [cartItems, existingProduct, params.slug]);
 
@@ -84,9 +86,11 @@ const Page = ({ params }: { params: { slug: string } }) => {
       itemImg: product?.images,
       size: selectedSize,
       brand: product?.brand,
+      price: product?.price
     };
 
     dispatch(addCart(item));
+    toast.success("Item added to Cart")
   };
   const handleRemoveCart = (e: any) => { 
     e.preventDefault();
@@ -111,8 +115,8 @@ const Page = ({ params }: { params: { slug: string } }) => {
         dispatch(updateCart(item));
       }
     }
-  };
-  
+    toast.success("Item removed from cart")
+  }; 
   const addUpdateCart = (e: any) => {
     e.preventDefault();
   
@@ -144,6 +148,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
       console.log("Item with selected size not found in the cart, adding new item");
       dispatch(addCart(item));
     }
+    toast.success("Item added to Cart")
   };
   
 
@@ -196,12 +201,13 @@ const Page = ({ params }: { params: { slug: string } }) => {
                   </div>
                   <div className="flex justify-center items-center mt-10 gap-5">
                     {cartProduct ? (
-                      <div className="flex justify-between items-center h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                      <div className="flex justify-evenly items-center h-12 w-20 overflow-hidden rounded-full bg-black text-white font-semibold">
                         <button onClick={handleRemoveCart}>
-                          <LuMinus />
+                          <LuMinus className="text-white font-semibold"/>
                         </button>
+                        <span>{existingProduct?.quantity}</span>
                         <button onClick={addUpdateCart}>
-                        <IoIosAdd />
+                        <IoIosAdd  className="text-white font-semibold"/>
                         </button>
                       </div>
                     ) : (
@@ -217,10 +223,10 @@ const Page = ({ params }: { params: { slug: string } }) => {
                     )}
 
                     <Link
-                      href={`/search/${product.brand}`}
+                      href={`/cart`}
                       className="text-md font-semibold text-slate-600"
                     >
-                      &#8592; Back To Search
+                      Go to Cart
                     </Link>
                   </div>
                 </div>

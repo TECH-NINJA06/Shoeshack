@@ -41,6 +41,7 @@ export async function POST(req: NextRequest) {
         { user: savedUser, id: savedUser._id, fullName: savedUser.fullName, token: token, message: "User logged in successfully", success: true },
         { status: 200 }
     );
+    console.log(response);
     response.cookies.set("token", token, {
       httpOnly: true,  
     })

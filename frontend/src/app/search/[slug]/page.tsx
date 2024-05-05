@@ -14,21 +14,22 @@ interface Product {
   category: string;
   brand: string;
   images: string;
-  // Add other properties as needed
 }
 
 function Page({ params }: { params: { slug: string } }) {
   const [results, setResults] = useState<Product[]>([]);
-  // const searchParams = useSearchParams()
-  // const result = searchParams.get('q')
+ 
+  const result = params.slug;
+  let slug = params.slug.replace("%20", " ")
+
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const result = params.slug;
         console.log(result);
         const response = await axios.get(`/api/search/${result}`);
         setResults(response.data);
-        console.log("Products found:", response.data); // Log the updated product
+        console.log("Products found:", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -40,9 +41,10 @@ function Page({ params }: { params: { slug: string } }) {
     <Provider store={store}>
       <div className="text-white">
         <Navbar />
-        <Link href={"/home"}>Back to home</Link>
-        <h1>Search results for: {params.slug}</h1>
-        <div className="w-full h-auto grid grid-cols-4 px-10">
+        <div className="mt-7 flex flex-col gap-5">
+          <Link href={"/home"} className="mx-2">&#8592; Back To Home</Link>
+        <h1 className="text-2xl font-bold border-b mx-5">Search results for: {slug}</h1>
+        <div className="w-full h-auto grid grid-cols-4 px-10 mt-5">
           {results?.map((product) => {
             return (
               <ProductItem
@@ -56,6 +58,8 @@ function Page({ params }: { params: { slug: string } }) {
             );
           })}
         </div>
+        </div>
+        
       </div>
     </Provider>
   );
