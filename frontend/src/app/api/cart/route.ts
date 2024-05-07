@@ -106,7 +106,6 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    // Verify user token
     const token = req.cookies.get("token")?.value;
     if (!token) {
       return NextResponse.json(
@@ -123,7 +122,6 @@ export async function DELETE(req: NextRequest) {
     }
     const userEmail = decodedToken.email;
 
-    // Find the user by email
     const savedUser = await User.findOne({ email: userEmail }).select(
       "-password"
     );
