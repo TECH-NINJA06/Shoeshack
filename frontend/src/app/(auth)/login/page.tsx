@@ -18,7 +18,7 @@ function LoginPage() {
     if (session.status === "loading") {
       setLoading(true);
     } else if (session.status === "authenticated") {
-      console.log(session)
+      console.log(session);  //session contains only email, image and name
       router.push('/profile');
     } else if (session.status === "unauthenticated") {
       toast.error("Please check details");
