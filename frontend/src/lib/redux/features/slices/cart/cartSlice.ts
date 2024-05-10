@@ -50,14 +50,17 @@ export const cartSlice = createSlice({
           axios.delete("/api/cart", { data: { productId: id, productSize: size } })
         },        
         updateCart: (state, action) => {
+            const { id, size } = action.payload;
             const itemIndex = state.cartItems.findIndex(
-                (item) => item.id === action.payload.id && item.size === action.payload.size
+                (item) => item.id === id && item.size === size
               );
             if (action.payload.function === 'add') {
               state.cartItems[itemIndex].quantity += 1;
-              axios.post("/api/cart", {productId: action.payload.id, productSize: action.payload.size});
+              axios.post("/api/cart", {productId: id, productSize: size}); 
             } else if (action.payload.function === 'subtract') {
-              state.cartItems[itemIndex].quantity -= 1
+              state.cartItems[itemIndex].quantity -= 1;
+              axios.delete("/api/cart", { data: { productId: id, productSize: size } })
+            
             }
         }
     }

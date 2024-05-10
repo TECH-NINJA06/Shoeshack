@@ -140,15 +140,25 @@ export async function DELETE(req: NextRequest) {
 
     // If the item exists in the cart, remove it
     if (cartItemIndex !== -1) {
-      savedUser.cart.splice(cartItemIndex, 1);
-      await savedUser.save();
-
-      console.log(savedUser.cart);
-
-      return NextResponse.json({
-        message: "Product removed from cart",
-        success: true,
-      });
+      if (savedUser.cart[cartItemIndex].quantity === 1) {
+        // If the quantity is 1, remove the item from the cart
+        savedUser.cart.splice(cartItemIndex, 1);
+        console.log(savedUser.cart);
+        await savedUser.save();
+        return NextResponse.json({
+          message: "Product removed from cart",
+          success: true,
+        });
+      } else if (savedUser.cart[cartItemIndex].quantity > 1) {
+        // If the quantity is greater than 1, decrement the quantity
+        savedUser.cart[cartItemIndex].quantity -= 1;
+        console.log(savedUser.cart);
+        await savedUser.save();
+        return NextResponse.json({
+          message: "Product quantity from cart updated",
+          success: true,
+        });
+      }
     } else {
       return NextResponse.json(
         { message: "Product not found in cart", success: false },
@@ -163,6 +173,7 @@ export async function DELETE(req: NextRequest) {
     );
   }
 }
+
 
 export async function GET(req: NextRequest) {
   try {
@@ -212,6 +223,89 @@ export async function GET(req: NextRequest) {
       },
       { status: 200 }
     );
+  } catch (error) {
+    console.error("Error at cart controller:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    await connect();
+    const { productId, productSize, cartFunction } = await req.json();
+
+    if (!productId || !productSize || !cartFunction) {
+      console.log("Please enter all fields");
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 422 }
+      );
+    }
+
+    const token = req.cookies.get("token")?.value;
+    if (!token) {
+      return NextResponse.json(
+        { message: "Token not found", success: false },
+        { status: 401 }
+      );
+    }
+    const decodedToken = jwt.verify(token, "hola123") as JwtPayload;
+    if (!decodedToken.email) {
+      return NextResponse.json(
+        { message: "User not found", success: false },
+        { status: 404 }
+      );
+    }
+    const userEmail = decodedToken.email;
+
+    const savedUser = await User.findOne({ email: userEmail }).select(
+      "-password"
+    );
+    if (!savedUser) {
+      return NextResponse.json(
+        { message: "User not found", success: false },
+        { status: 404 }
+      );
+    }
+
+    // Find the index of the cart item with the specified product ID and size
+    const cartItemIndex = savedUser.cart.findIndex(
+      (item: any) =>
+        item.product.toString() === productId && item.size === productSize
+    );
+
+    // If the item exists in the cart, update its quantity
+    if (cartItemIndex !== -1) {
+      if (cartFunction === "add") {
+        savedUser.cart[cartItemIndex].quantity += 1;
+      } else if (cartFunction === "subtract") {
+        // Check if the quantity is greater than 1 before decrementing
+        if (savedUser.cart[cartItemIndex].quantity > 1) {
+          savedUser.cart[cartItemIndex].quantity -= 1;
+        } else {
+          // If the quantity is already 1, remove the item from the cart
+          savedUser.cart.splice(cartItemIndex, 1);
+        }
+      }
+      
+      // Save the user with updated cart
+      await savedUser.save();
+
+      console.log(savedUser.cart);
+
+      return NextResponse.json({
+        message: "Cart updated successfully",
+        success: true,
+      });
+    } else {
+      return NextResponse.json(
+        { message: "Product not found in cart", success: false },
+        { status: 404 }
+      );
+    }
   } catch (error) {
     console.error("Error at cart controller:", error);
     return NextResponse.json(
