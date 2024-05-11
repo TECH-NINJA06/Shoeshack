@@ -178,15 +178,6 @@ export async function DELETE(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     await connect();
-    const { productId, productSize } = await req.json();
-
-    if (!productId || !productSize) {
-      console.log("Please enter all fields");
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 422 }
-      );
-    }
 
     const token = req.cookies.get("token")?.value;
     if (!token) {
