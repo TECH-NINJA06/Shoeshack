@@ -12,31 +12,19 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
-  //Google login
-  useEffect(() => {
-    if (session.status === "loading") {
-      setLoading(true);
-    } else if (session.status === "authenticated") {
-      console.log(session);  //session contains only email, image and name
-      router.push('/profile');
-    } else if (session.status === "unauthenticated") {
-      toast.error("Please check details");
-      setLoading(false);
-    }
-  }, [session]);
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(`/api/auth/login`,{
+      const response = await axios.post(`/api/auth/login`, {
         email,
-        password
-      })
+        password,
+      });
       console.log(response);
       const data = response.data;
       if (response.status === 200) {
-
         const token = data.token;
         console.log(token);
 
@@ -48,11 +36,49 @@ function LoginPage() {
     } catch (error) {
       console.log(error);
       toast.error("Please check details");
-      setLoading(false)
+      setLoading(false);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
+
+  // //Google login
+  // async function handleGoogleLogin() {
+  //   signIn("google");
+  //   if (session.status === "loading") {
+  //     setLoading(true);
+  //     console.log("Loading...");
+  //   } else if (session.status === "authenticated") {
+  //     console.log(session); //session contains only email, image and name
+
+  //     const fullName = session?.data?.user?.name;
+  //     const email = session?.data?.user?.email;
+  //     const id = session?.data?.user?.name;
+  //     const response = await axios.post(`/api/auth/googleLogin`, {
+  //       fullName,
+  //       email,
+  //     });
+  //     const data = response.data;
+
+  //     if (response.status === 200) {
+  //       const token = data.token;
+  //       console.log(token);
+
+  //       const id = data.id;
+  //       const fullname = data.fullName;
+  //       toast.success("Login successful");
+  //       router.push(`/profile/${id}`);
+  //       setButtonClicked(false);
+  //       setLoading(false);
+  //     }
+  //   } else if (session.status === "unauthenticated") {
+  //     setLoading(false);
+  //     setButtonClicked(false);
+  //   } else {
+  //     setLoading(false);
+  //     setButtonClicked(false);
+  //   }
+  // }
 
   return (
     <div className=" h-[100vh] w-[100vw] relative">
@@ -64,28 +90,28 @@ function LoginPage() {
       <div className=" h-[80%] w-[30%] z-50  flex justify-center items-center absolute top-[5%] left-[35%] rounded-md backdrop-blur-[4px] border border-white">
         <div className="h-full w-full mx-5 flex flex-col justify-evenly">
           <div className=" h-20 w-full flex justify-center items-center font-semibold text-3xl text-[#0B1215]">
-            <h1>{loading? "Loading": "LOGIN"}</h1>
+            <h1>{loading ? "Loading" : "LOGIN"}</h1>
           </div>
           <div className="h-[75%] w-full bg-white rounded">
-            <div className="flex items-center flex-col pap-5 mt-7 justify-between">
-              <div className="flex justify-center items-center gap-10">
+            <div className="flex items-center flex-col mt-7 justify-between">
+              <div className="flex flex-col justify-center">
                 <h6 className="text-black font-bold">Email: </h6>
                 <input
                   type="text"
                   name="email"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black "
+                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border"
                   placeholder="Enter your Email"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
               </div>
-              <div className="flex justify-center items-center gap-1 mt-7 mb-10">
+              <div className="flex flex-col justify-center gap-1 mt-7 mb-10">
                 <h6 className="text-black font-bold ">Password: </h6>
                 <input
                   type="password"
                   name="password"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black "
+                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border"
                   placeholder="Enter your Password"
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -97,10 +123,10 @@ function LoginPage() {
                   Login
                 </button>
               </div>
-              <div className="h-10 w-40 bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
+              {/* <div className="h-10 w-40 bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
                 <button
                   className="h-full w-full border flex justify-center items-center gap-1 border-slate-700 rounded-lg text-slate-200 hover:border-slate-500 hover:text-slate-300 hover:shadow transition duration-150"
-                  onClick={()=>signIn("google")}
+                  onClick={handleGoogleLogin}
                 >
                   <img
                     className="w-6 h-6"
@@ -112,7 +138,7 @@ function LoginPage() {
                     Login with Google
                   </span>
                 </button>
-              </div>
+              </div> */}
               <div className="h-10 w-full flex justify-center items-center mt-20 text-black">
                 <p className=" text-[#0B1215]">
                   New to ShoeShack? <Link href="/signup">Signup</Link>

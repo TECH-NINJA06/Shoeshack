@@ -4,7 +4,7 @@ import { useSession, signIn } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -24,7 +24,7 @@ function LoginPage() {
       });
       console.log(response.data);
       if (response.status === 200) {
-        const data = await response.data
+        const data = await response.data;
         const token = data.token;
         console.log(token);
 
@@ -33,10 +33,10 @@ function LoginPage() {
 
         toast.success("Signup successful");
 
-      router.push(`/profile/${id}`);
-      console.log(
-        `"fullName" ${fullName}, "email" ${email}, "password" ${password}`
-      );
+        router.push(`/profile/${id}`);
+        console.log(
+          `"fullName" ${fullName}, "email" ${email}, "password" ${password}`
+        );
       }
     } catch (error) {
       console.log(error);
@@ -60,36 +60,36 @@ function LoginPage() {
           </div>
           <div className="h-[80%] w-full bg-white rounded">
             <div className="flex items-center flex-col gap-5 mt-7 justify-between">
-              <div className="flex justify-center items-center gap-1">
+              <div className="flex flex-col justify-center">
                 <h6 className="text-black font-bold">Full Name: </h6>
                 <input
                   type="text"
                   name="email"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black "
+                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border h-8"
                   placeholder="Enter your name"
                   onChange={(e) => {
                     setFullName(e.target.value);
                   }}
                 />
               </div>
-              <div className="flex justify-center items-center gap-10">
+              <div className="flex justify-center flex-col">
                 <h6 className="text-black font-bold">Email: </h6>
                 <input
                   type="text"
                   name="email"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black "
+                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border h-8"
                   placeholder="Enter your Email"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
               </div>
-              <div className="flex justify-center items-center gap-1 mb-10">
+              <div className="flex justify-center flex-col gap-1 mb-10">
                 <h6 className="text-black font-bold ">Password: </h6>
                 <input
                   type="password"
                   name="password"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black "
+                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border h-8"
                   placeholder="Enter your Password"
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -101,7 +101,7 @@ function LoginPage() {
                   Signup
                 </button>
               </div>
-              <div className="h-10 w-40 bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
+              {/* <div className="h-10 w-40 bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
                 <button
                   className="h-full w-full border flex justify-center items-center gap-1  border-slate-700 rounded-lg text-white hover:border-slate-500 hover:text-slate-300 hover:shadow transition duration-150"
                   onClick={() => signIn("google")}
@@ -116,8 +116,8 @@ function LoginPage() {
                     Login with Google
                   </span>
                 </button>
-              </div>
-              <div className="h-10 w-full flex justify-center items-center mt-20 text-black">
+              </div> */}
+              <div className="h-10 w-full flex justify-center items-center mt-10 text-black">
                 <p className=" text-[#0B1215]">
                   Already a User? <Link href="/login">Login</Link>
                 </p>
