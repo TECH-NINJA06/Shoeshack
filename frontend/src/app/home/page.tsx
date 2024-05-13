@@ -40,7 +40,7 @@ export default function Home() {
             <div className="h-[10%] w-full md:text-4xl sm:text-3xl md:leading-[0] leading-6 font-semibold">
               <h2>Check Out our Products</h2>
             </div>
-            <div className="h-[88%] w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 md:pl-28">
+            <div className="h-[88%] w-full md:grid lg:grid-cols-3 md:grid-cols-2 sm:flex sm:flex-col sm:items-center md:pl-28">
               {results?.map((product) => (
                 <ProductItem
                   key={product._id}
