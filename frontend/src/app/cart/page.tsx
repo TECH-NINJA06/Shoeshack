@@ -38,6 +38,7 @@ function Page() {
   const dispatch = useDispatch();
   const reduxCartItems = useSelector((state: RootState) => state.cartItems);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [updatedCartItems, setUpdatedCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,7 +95,7 @@ function Page() {
     const updateCartItems = async () => {
       try {
         const cartItemsWithProductDetails = await fetchCartItemsWithProductDetails(cartItems);
-        setCartItems(cartItemsWithProductDetails);
+        setUpdatedCartItems(cartItemsWithProductDetails);
         console.log("Updated cart", cartItemsWithProductDetails);
       } catch (error) {
         console.error("Error fetching cart items with product details", error);
@@ -105,11 +106,11 @@ function Page() {
   }, [cartItems]);
 
   const calculateTotalPrice = () => {
-    if (cartItems.length === 0) {
+    if (updatedCartItems.length === 0) {
       return 0;
     }
     let totalPrice = 0;
-    cartItems.forEach((item) => {
+    updatedCartItems.forEach((item) => {
       totalPrice += (item.productDetails?.price || 0) * item.quantity;
     });
     return totalPrice;
@@ -117,12 +118,16 @@ function Page() {
 
   const handleDeleteCart = async (productId: string, productSize: number) => {
     try {
+      const delItems = {
+        id: productId,
+        size: productSize
+      }
       // Dispatch the removeCart action with the product ID and size
-      await dispatch(removeCart({ id: productId, size: productSize }));
+      dispatch(removeCart(delItems));
       // After successful removal, fetch updated cart items from the server
-      const response = await axios.get(`/api/home`);
-      console.log("Cart updated", response.data);
-      const items = await response.data.user.cart;
+      const response = await axios.get(`/api/cart`);
+      console.log("Cart updated", response.data.cart);
+      const items = await response.data.cart;
       // Update the local state with the updated cart items
       setCartItems(items);
       console.log("Cart items updated", items.length);
@@ -157,7 +162,7 @@ function Page() {
             <p className="text-slate-300">SubTotal</p>
           </div>
           <div className="w-full h-72 overflow-y-scroll flex flex-col items-center border-b border-white pr-10 my-5 gap-2">
-            {cartItems.map((cartItem) => {
+            {updatedCartItems.map((cartItem) => {
               const productTitle = cartItem.productDetails
                 ? cartItem.productDetails.title
                 : '';
@@ -168,7 +173,7 @@ function Page() {
               return (
                 <div
                   className="w-full h-[45%] flex gap-4 items-center justify-between border-b"
-                  key={cartItem.productDetails?._id}
+                  key={cartItem._id}
                 >
                   <div className="h-full w-[40%]  flex gap-16 items-center px-2">
                     <button onClick={() => handleDeleteCart(cartItem?.productDetails?._id || '', cartItem.size)}>
@@ -178,7 +183,7 @@ function Page() {
                       href={`/product/${cartItem.productDetails?._id}`}
                       className="h-[95%] w-52 flex justify-center items-center"
                     >
-                      <div className="size-full flex justify-center items-center overflow-hidden">
+                      <div className="h-[95%] w-full flex justify-center items-center overflow-hidden">
                         <img
                           src={cartItem.productDetails?.images}
                           alt="item_Img"

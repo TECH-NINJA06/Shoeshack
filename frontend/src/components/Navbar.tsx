@@ -32,7 +32,7 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const [profile, setProfile] = useState<Profile | null>(null);
   const [gAvatar, setGAvatar] = useState(null);
-  const [cartItem, setCartItem] = useState(0);
+  const [cartItemLength, setCartItemLength] = useState(0);
 
   const cartItems = useSelector((state: RootState) => state.cartItems);
   useEffect(() => {
@@ -41,7 +41,7 @@ const Navbar = () => {
         const response = await axios.get(`/api/home`);
         setProfile(response.data);
         console.log("Profile updated", response.data);
-        setCartItem(response.data.user.cart.length);
+        setCartItemLength(response.data.user.cart.length);
         // if(session) {
         //   const avatar = session?.data?.user?.image;
         //   console.log(avatar)
@@ -96,7 +96,7 @@ const Navbar = () => {
               <div className="h-[90%] w-full flex justify-center items-center pt-3">
                 <IoCartOutline className="size-[80%]" />
                 <span>
-                  {cartItems.length > 0 ? cartItems.length : cartItem}
+                {cartItems && cartItems.length > 0 ? cartItems.length : (cartItemLength ? cartItemLength : 0)}
                 </span>
               </div>
             </Link>

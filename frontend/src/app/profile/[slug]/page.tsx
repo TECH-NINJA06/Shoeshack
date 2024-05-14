@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+// import { dbCartUpdate } from "@/lib/redux/features/slices/cart/cartSlice";
 
 // Define an interface representing the structure of a profile
 interface Profile {
@@ -12,6 +14,7 @@ interface Profile {
 
 const Page = () => {
   const session = useSession()
+  // const dispatch = useDispatch()
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
 
@@ -19,6 +22,7 @@ const Page = () => {
     (async () => {
      const response = await axios.get(`/api/auth/profile`);
      setProfile(response.data)
+    //  dispatch(dbCartUpdate(response.data.cart));
      console.log("Profile updated" + response.data);
      console.log(session)
     })();

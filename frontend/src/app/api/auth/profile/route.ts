@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
 
     const avatar = user.avatar || '/navAvatar.jpg';
 
-    const response = NextResponse.json({ id: user._id, fullName: user.fullName, avatar: avatar }, { status: 200 });
+    const response = NextResponse.json({ id: user._id, fullName: user.fullName, avatar: avatar, cart: user.cart }, { status: 200 });
     console.log(response);
     return response;
   } catch (error) {

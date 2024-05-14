@@ -54,7 +54,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   }, [params.slug]);
 
   const cartItems = useSelector((state: RootState) => state.cartItems);
-  const existingProduct = cartItems.find(
+  const existingProduct = cartItems && cartItems.find(
     (product) => product.id === params.slug && product.size === selectedSize
   );
 
