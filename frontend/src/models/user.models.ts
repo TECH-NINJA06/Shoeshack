@@ -16,6 +16,9 @@ const cartItemSchema = new Schema({
 
 const userSchema = new Schema(
     {
+      googleId: {
+        type: String,
+      },
       fullName: {
         type: String,
         required: true,
@@ -23,7 +26,6 @@ const userSchema = new Schema(
       email: {
         type: String,
         required: true,
-        unique: true,
       },
       password: {
         type: String,

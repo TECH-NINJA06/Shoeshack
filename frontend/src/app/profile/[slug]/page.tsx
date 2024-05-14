@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 // Define an interface representing the structure of a profile
 interface Profile {
@@ -10,6 +11,7 @@ interface Profile {
 }
 
 const Page = () => {
+  const session = useSession()
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
 
@@ -18,17 +20,18 @@ const Page = () => {
      const response = await axios.get(`/api/auth/profile`);
      setProfile(response.data)
      console.log("Profile updated" + response.data);
+     console.log(session)
     })();
   }, []);
 
-  const handleLogout = () => {
-    axios.post(`/api/auth/logout`).then((response) => {
-      if (response.status === 200) {
+  const handleLogout = async () => {
+    try {
+      await axios.post(`/api/auth/logout`);
+      // signOut();
       router.push('/login');
-      }
-    }).catch((err)=>{
-      console.log("Error at logout"+ err)
-    })
+    } catch (error) {
+      console.error("Error at logout:", error);
+    }
   };
 
   return (

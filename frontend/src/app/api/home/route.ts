@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
 
     const avatar = user.avatar || '/navAvatar.jpg';
 
-    return NextResponse.json({id: user._id, fullName: user.fullName, avatar: avatar}, { status: 200 });
+    return NextResponse.json({user: user, id: user._id, fullName: user.fullName, avatar: avatar}, { status: 200 });
   } catch (error) {
     console.error("Error at home route:", error);
     return NextResponse.json({ message: "Internal server error", success: false }, { status: 500 });

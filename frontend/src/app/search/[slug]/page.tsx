@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { ProductItem } from "../../components/Search/Product";
 import Link from "next/link";
@@ -38,13 +37,12 @@ function Page({ params }: { params: { slug: string } }) {
     fetchProduct();
   }, [params.slug]);
   return (
-    <Provider store={store}>
       <div className="text-white">
         <Navbar />
         <div className="mt-7 flex flex-col gap-5">
           <Link href={"/home"} className="mx-2">&#8592; Back To Home</Link>
         <h1 className="text-2xl font-bold border-b mx-5">Search results for: {slug}</h1>
-        <div className="w-full h-auto grid grid-cols-4 px-10 mt-5">
+        <div className="w-full h-auto grid grid-cols-1 px-10 mt-5    md:grid lg:grid-cols-3 md:grid-cols-2 sm:flex sm:flex-col sm:justify-center sm:items-center">
           {results?.map((product) => {
             return (
               <ProductItem
@@ -61,7 +59,6 @@ function Page({ params }: { params: { slug: string } }) {
         </div>
         
       </div>
-    </Provider>
   );
 }
 

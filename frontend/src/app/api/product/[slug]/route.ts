@@ -8,7 +8,7 @@ export async function GET(req: NextRequest, { params } : any) {
     await connect();
 
     const { slug } = params;
-    console.log('Product_id:', slug);
+    // console.log('Product_id:', slug);
 
     const product = await Product.findOne({_id: slug});
 

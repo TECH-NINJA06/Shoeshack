@@ -7,6 +7,7 @@ import { IoCartOutline } from "react-icons/io5";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
 interface Profile {
   avatar?: string;
@@ -26,9 +27,11 @@ interface RootState {
 }
 
 const Navbar = () => {
+  const session = useSession();
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [gAvatar, setGAvatar] = useState(null);
   const [cartItem, setCartItem] = useState(0);
 
   const cartItems = useSelector((state: RootState) => state.cartItems);
@@ -38,6 +41,12 @@ const Navbar = () => {
         const response = await axios.get(`/api/home`);
         setProfile(response.data);
         console.log("Profile updated", response.data);
+        setCartItem(response.data.user.cart.length);
+        // if(session) {
+        //   const avatar = session?.data?.user?.image;
+        //   console.log(avatar)
+        //   // setGAvatar(avatar)
+        // }
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -99,8 +108,8 @@ const Navbar = () => {
                 className="size-full rounded-full bg-center bg-no-repeat bg-cover"
                 style={{
                   backgroundImage: `url(${
-                    profile && profile.avatar
-                      ? profile.avatar
+                    profile && gAvatar
+                      ? gAvatar
                       : "/navAvatar.jpg"
                   })`,
                 }}
