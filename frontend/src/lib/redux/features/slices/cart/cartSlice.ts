@@ -62,7 +62,11 @@ export const cartSlice = createSlice({
               axios.delete("/api/cart", { data: { productId: id, productSize: size } })
             
             }
-        }
+        },
+        // dbCartUpdate: (state, action) => {
+        //   const { cartItems } = action.payload;
+        //   state.cartItems.push(cartItems)
+        // }
     }
 })
 
