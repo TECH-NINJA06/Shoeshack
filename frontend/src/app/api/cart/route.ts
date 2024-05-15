@@ -104,6 +104,8 @@ export async function DELETE(req: NextRequest) {
         { error: "All fields are required" },
         { status: 422 }
       );
+    } else {
+      console.log("Product exists: " + productId, productSize);
     }
 
     const token = req.cookies.get("token")?.value;
@@ -149,15 +151,6 @@ export async function DELETE(req: NextRequest) {
           message: "Product removed from cart",
           success: true,
         });
-      } else if (savedUser.cart[cartItemIndex].quantity > 1) {
-        // If the quantity is greater than 1, decrement the quantity
-        savedUser.cart[cartItemIndex].quantity -= 1;
-        console.log(savedUser.cart);
-        await savedUser.save();
-        return NextResponse.json({
-          message: "Product quantity from cart updated",
-          success: true,
-        });
       }
     } else {
       return NextResponse.json(
@@ -165,6 +158,13 @@ export async function DELETE(req: NextRequest) {
         { status: 404 }
       );
     }
+
+    return NextResponse.json({
+      message: "Cart Operation completed successfully",
+      success: true,
+    });
+
+
   } catch (error) {
     console.error("Error at cart controller:", error);
     return NextResponse.json(
