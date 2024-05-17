@@ -6,8 +6,9 @@ import { FaSearch } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
+import { dbCartUpdate } from "@/lib/redux/features/slices/cart/cartSlice";
 
 interface Profile {
   avatar?: string;
@@ -27,14 +28,15 @@ interface RootState {
 }
 
 const Navbar = () => {
-  const session = useSession();
+  const dispatch = useDispatch();
+  // const session = useSession();
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [profile, setProfile] = useState<Profile | null>(null);
   const [gAvatar, setGAvatar] = useState(null);
   const [cartItemLength, setCartItemLength] = useState(0);
 
-  const cartItems = useSelector((state: RootState) => state.cartItems);
+
   useEffect(() => {
     (async () => {
       try {
@@ -52,6 +54,22 @@ const Navbar = () => {
       }
     })();
   }, []);
+    //Redux cart update
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get("/api/cart");
+          console.log("Redux Cart updated", response.data);
+          dispatch(dbCartUpdate(response.data.cart))
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+  const cartItems = useSelector((state: RootState) => state.cartItems);
+
 
   const handleSearch = () => {
     console.log(search);
@@ -96,7 +114,7 @@ const Navbar = () => {
               <div className="h-[90%] w-full flex justify-center items-center pt-3">
                 <IoCartOutline className="size-[80%]" />
                 <span>
-                {cartItems && cartItems.length > 0 ? cartItems.length : (cartItemLength ? cartItemLength : 0)}
+                {cartItems.length}
                 </span>
               </div>
             </Link>
