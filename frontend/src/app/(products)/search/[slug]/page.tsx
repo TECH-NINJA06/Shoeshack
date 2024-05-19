@@ -1,11 +1,11 @@
 "use client";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { ProductItem } from "../../components/Search/Product";
+import { ProductItem } from "../../../components/Search/Product";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { Provider } from "react-redux";
-import { store } from "@/lib/redux/store";
+// import { Provider } from "react-redux";
+// import { store } from "@/lib/redux/store";
 
 interface Product {
   _id: string;

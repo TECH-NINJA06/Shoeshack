@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCart, removeCart, updateCart } from "@/lib/redux/features/slices/cart/cartSlice";
+import { addCart, dbCartUpdate, removeCart, updateCart } from "@/lib/redux/features/slices/cart/cartSlice";
 import { IoIosAdd } from "react-icons/io";
 import { LuMinus } from "react-icons/lu";
 import toast from "react-hot-toast";
@@ -20,11 +20,8 @@ interface Product {
   color: string;
 }
 interface CartItem {
-  id: string;
-  title: string;
-  image: string;
-  brand: string;
-  price: number;
+  _id: string;
+  product: string;
   size: number;
   quantity: number;
 }
@@ -52,10 +49,24 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
     fetchProduct();
   }, [params.slug]);
+    //Redux cart update
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get("/api/cart");
+          console.log("Redux Cart updated", response.data);
+          dispatch(dbCartUpdate(response.data.cart))
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+  
+      fetchData();
+    }, []);
 
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const existingProduct = cartItems && cartItems.find(
-    (product) => product.id === params.slug && product.size === selectedSize
+    (product) => product.product === params.slug && product.size === selectedSize
   );
 
   useEffect(() => {
@@ -81,12 +92,8 @@ const Page = ({ params }: { params: { slug: string } }) => {
     e.preventDefault();
 
     const item = {
-      id: params.slug,
-      title: product?.title,
-      itemImg: product?.images,
+      product: params.slug,
       size: selectedSize,
-      brand: product?.brand,
-      price: product?.price
     };
 
     dispatch(addCart(item));
@@ -96,21 +103,21 @@ const Page = ({ params }: { params: { slug: string } }) => {
     e.preventDefault();
   
     // Find the index of the item in the cartItems array
-    const itemIndex = cartItems.findIndex((item) => item.id === params.slug && item.size === selectedSize);
+    const itemIndex = cartItems.findIndex((item) => item.product === params.slug && item.size === selectedSize);
   
     // If itemIndex is not -1, it means the item exists in the cart
     if (itemIndex !== -1) {
       if (cartItems[itemIndex].quantity === 1) {
         const removeItem = {
-          id: params.slug,
+          product: params.slug,
           size: selectedSize
         }
         dispatch(removeCart(removeItem));
       } else {
         const item = {
-          id: params.slug,
+          product: params.slug,
           size: selectedSize,
-          function: 'subtract'
+          cartFunction: 'subtract'
         };
         dispatch(updateCart(item));
       }
@@ -126,22 +133,19 @@ const Page = ({ params }: { params: { slug: string } }) => {
     }
   
     const item = {
-      id: params.slug,
-      title: product?.title,
-      itemImg: product?.images,
+      product: params.slug,
       size: selectedSize,
-      brand: product?.brand,
     };
   
-    const existingCartItem = cartItems.find((item) => item.id === params.slug && item.size === selectedSize);
+    const existingCartItem = cartItems.find((item) => item.product === params.slug && item.size === selectedSize);
     console.log(existingCartItem);
   
     if (existingCartItem) {
       console.log("Item with selected size already exists in the cart");
       const existItem = {
-        id: params.slug,
+        product: params.slug,
         size: selectedSize,
-        function: "add",
+        cartFunction: "add",
       };
       dispatch(updateCart(existItem));
     } else {

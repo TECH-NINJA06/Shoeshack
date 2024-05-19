@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
+import { dbCartUpdate } from "@/lib/redux/features/slices/cart/cartSlice";
 // import { dbCartUpdate } from "@/lib/redux/features/slices/cart/cartSlice";
 
 // Define an interface representing the structure of a profile
@@ -14,18 +15,32 @@ interface Profile {
 
 const Page = () => {
   const session = useSession()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const router = useRouter();
-  const [profile, setProfile] = useState<Profile | null>(null); // Use the Profile interface as the type
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [cart, setCart] = useState([])
 
   useEffect(() => {
     (async () => {
      const response = await axios.get(`/api/auth/profile`);
      setProfile(response.data)
-    //  dispatch(dbCartUpdate(response.data.cart));
      console.log("Profile updated" + response.data);
      console.log(session)
     })();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/cart");
+        setCart(response.data);
+        console.log("Redux Cart updated", response.data);
+        dispatch(dbCartUpdate(response.data.cart))
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleLogout = async () => {
@@ -123,4 +138,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Page
