@@ -4,15 +4,16 @@ const stripe = require("stripe")(process.env.STRIPE_TEST_KEY);
 
 export async function POST(req: NextRequest) {
   const { items } = await req.json();
+  console.log(items)
 
   const transformedItems = items.map((item: any) => ({
     price_data: {
       currency: "inr",
       product_data: {
         images: [],
-        name: item.title,
+        name: item.productDetails.title,
       },
-      unit_amount: item.price * 100,
+      unit_amount: item.productDetails.price * 100,
     },
     quantity: item.quantity,
   }));
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
     line_items: transformedItems,
     mode: "payment",
     success_url: `${process.env.PRODUCTION_URL || "http://localhost:3000/"}payment-success`,
-    cancel_url: `${process.env.PRODUCTION_URL || "http://localhost:3000/"}payment-cancel`,
+    cancel_url: `${process.env.PRODUCTION_URL || "http://localhost:3000/"}cart`,
     metadata: {
       email: "test@gmail.com",
       images: JSON.stringify(items.map((item: any) => item.itemImg)),
