@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import Product from "@/models/product.models";
 
-
 //cart route controllers
 
 export async function POST(req: NextRequest) {
@@ -13,6 +12,10 @@ export async function POST(req: NextRequest) {
     const { productId, productSize } = await req.json();
 
     if (!productId || !productSize) {
+      console.log(
+        "ProductID: " + productId,
+        "ProductSize: " + productSize
+      );
       console.log("Please enter all fields");
       return NextResponse.json(
         { error: "All fields are required" },
@@ -99,6 +102,10 @@ export async function DELETE(req: NextRequest) {
     const { productId, productSize } = await req.json();
 
     if (!productId || !productSize) {
+      console.log(
+        "ProductID: " + productId,
+        "ProductSize: " + productSize
+      );
       console.log("Please enter all fields");
       return NextResponse.json(
         { error: "All fields are required" },
@@ -127,6 +134,7 @@ export async function DELETE(req: NextRequest) {
     const savedUser = await User.findOne({ email: userEmail }).select(
       "-password"
     );
+    console.log(savedUser.cart)
     if (!savedUser) {
       return NextResponse.json(
         { message: "User not found", success: false },
@@ -142,17 +150,17 @@ export async function DELETE(req: NextRequest) {
 
     // If the item exists in the cart, remove it
     if (cartItemIndex !== -1) {
-      if (savedUser.cart[cartItemIndex].quantity === 1) {
+      console.log("Product index: " + cartItemIndex);
         // If the quantity is 1, remove the item from the cart
         savedUser.cart.splice(cartItemIndex, 1);
-        console.log(savedUser.cart);
+        console.log("Product quantity is 1 " + savedUser.cart);
         await savedUser.save();
         return NextResponse.json({
           message: "Product removed from cart",
           success: true,
         });
-      }
     } else {
+      console.log("Product not found in cart");
       return NextResponse.json(
         { message: "Product not found in cart", success: false },
         { status: 404 }
@@ -163,8 +171,6 @@ export async function DELETE(req: NextRequest) {
       message: "Cart Operation completed successfully",
       success: true,
     });
-
-
   } catch (error) {
     console.error("Error at cart controller:", error);
     return NextResponse.json(
@@ -173,7 +179,6 @@ export async function DELETE(req: NextRequest) {
     );
   }
 }
-
 
 export async function GET(req: NextRequest) {
   try {
@@ -229,6 +234,11 @@ export async function PATCH(req: NextRequest) {
     const { productId, productSize, cartFunction } = await req.json();
 
     if (!productId || !productSize || !cartFunction) {
+      console.log(
+        "ProductID: " + productId,
+        "ProductSize: " + productSize,
+        "CartFunction: " + cartFunction
+      );
       console.log("Please enter all fields");
       return NextResponse.json(
         { error: "All fields are required" },
@@ -281,7 +291,7 @@ export async function PATCH(req: NextRequest) {
           savedUser.cart.splice(cartItemIndex, 1);
         }
       }
-      
+
       // Save the user with updated cart
       await savedUser.save();
 

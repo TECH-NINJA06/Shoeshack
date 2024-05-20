@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { removeCart } from "@/lib/redux/features/slices/cart/cartSlice";
+import { dbCartUpdate, removeCart } from "@/lib/redux/features/slices/cart/cartSlice";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -55,6 +55,20 @@ function Page() {
 
     fetchData();
   }, []);
+  //Redux cart update
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/cart");
+        console.log("Redux Cart updated", response.data);
+        dispatch(dbCartUpdate(response.data.cart))
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [cartItems]);
   async function fetchProductDetails(productId: string) {
     try {
       const response = await axios.get(`/api/product/${productId}`);
@@ -94,7 +108,7 @@ function Page() {
 
     const updateCartItems = async () => {
       try {
-        const cartItemsWithProductDetails = await fetchCartItemsWithProductDetails(cartItems);
+        const cartItemsWithProductDetails = await fetchCartItemsWithProductDetails(reduxCartItems);
         setUpdatedCartItems(cartItemsWithProductDetails);
         console.log("Updated cart", cartItemsWithProductDetails);
       } catch (error) {
@@ -119,7 +133,7 @@ function Page() {
   const handleDeleteCart = async (productId: string, productSize: number) => {
     try {
       const delItems = {
-        id: productId,
+        productId: productId,
         size: productSize
       }
       // Dispatch the removeCart action with the product ID and size

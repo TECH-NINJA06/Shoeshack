@@ -1,9 +1,11 @@
 "use client";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { HeroCarousal } from "../../components/HeroCarousal";
+import { HeroCarousal } from "../../../components/HeroCarousal";
 import Navbar from "@/components/Navbar";
-import { ProductItem } from "../components/Search/Product";
+import { ProductItem } from "../../components/Search/Product";
+import { useDispatch } from "react-redux";
+import { dbCartUpdate } from "@/lib/redux/features/slices/cart/cartSlice";
 
 interface Product {
   _id: string;
@@ -14,6 +16,7 @@ interface Product {
 }
 
 export default function Home() {
+  const dispatch = useDispatch();
   const [results, setResults] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -22,6 +25,20 @@ export default function Home() {
         const response = await axios.get("/api/homeProducts");
         setResults(response.data);
         console.log("Home updated", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  //Redux cart update
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/cart");
+        console.log("Redux Cart updated", response.data);
+        dispatch(dbCartUpdate(response.data.cart))
       } catch (error) {
         console.error("Error fetching data:", error);
       }
