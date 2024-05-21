@@ -32,6 +32,7 @@ function LoginPage() {
         const fullname = data.fullName;
         toast.success("Login successful");
         router.push(`/profile/${id}`);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -87,13 +88,13 @@ function LoginPage() {
         alt="bgimage"
         className="h-full -z-50 grayscale w-full"
       />
-      <div className=" h-[80%] w-[30%] z-50  flex justify-center items-center absolute top-[5%] left-[35%] rounded-md backdrop-blur-[4px] border border-white">
+      <div className=" sm:h-[80%] sm:w-[30%]  z-50  flex justify-center items-center absolute sm:top-[%] top-[12%] sm:left-[35%] left-[23%] rounded-md backdrop-blur-[4px] border border-white">
         <div className="h-full w-full mx-5 flex flex-col justify-evenly">
           <div className=" h-20 w-full flex justify-center items-center font-semibold text-3xl text-[#0B1215]">
             <h1>{loading ? "Loading" : "LOGIN"}</h1>
           </div>
-          <div className="h-[75%] w-full bg-white rounded">
-            <div className="flex items-center flex-col mt-7 justify-between">
+          <div className="h-[75%] w-full bg-white rounded py-4 sm:py-0">
+            <div className="flex items-center flex-col sm:mt-7 justify-between">
               <div className="flex flex-col justify-center">
                 <h6 className="text-black font-bold">Email: </h6>
                 <input

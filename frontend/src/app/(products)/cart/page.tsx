@@ -151,12 +151,12 @@ function Page() {
   };
   
   async function handleCheckout() {
-    if (cartItems.length === 0) {
+    if (updatedCartItems.length === 0) {
       toast.error("Please select a product");
       return;
     }
     const response = await axios.post("/api/checkout", {
-      items: cartItems,
+      items: updatedCartItems,
     });
     router.push(`${response.data.session_url}`);
   }
