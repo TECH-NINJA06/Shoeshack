@@ -42,7 +42,7 @@ function Page({ params }: { params: { slug: string } }) {
         <div className="mt-7 flex flex-col gap-5">
           <Link href={"/home"} className="mx-2">&#8592; Back To Home</Link>
         <h1 className="text-2xl font-bold border-b mx-5">Search results for: {slug}</h1>
-        <div className="w-full h-auto grid grid-cols-1 lg:ml-10 px-10 mt-5 md:grid lg:grid-cols-3 md:grid-cols-2 sm:flex sm:flex-col sm:justify-center sm:items-center">
+        <div className="w-full h-auto grid grid-cols-1 px-10 mt-5 md:grid lg:grid-cols-3 md:grid-cols-2 sm:flex sm:flex-col sm:justify-center sm:items-center">
           {results?.map((product) => {
             const productTitle = product
             ? product?.title
