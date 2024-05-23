@@ -82,14 +82,14 @@ function LoginPage() {
   // }
 
   return (
-    <div className=" h-[100vh] w-[100vw] relative">
-      <img
+    <div className="max-h-screen h-screen w-screen flex justify-center items-center bg-center bg-cover bg-no-repeat" style={{backgroundImage: `url("./authBG.jpg")`, filter:'grayscale(100%)' }}>
+      {/* <img
         src="./authBG.jpg"
         alt="bgimage"
-        className="h-full -z-50 grayscale w-full"
-      />
-      <div className=" sm:h-[80%] sm:w-[30%]  z-50  flex justify-center items-center absolute sm:top-[%] top-[12%] sm:left-[35%] left-[23%] rounded-md backdrop-blur-[4px] border border-white">
-        <div className="h-full w-full mx-5 flex flex-col justify-evenly">
+        className="h-full w-full absolute top-0 left-0 -z-50 grayscale object-cover"
+      /> */}
+      <div className="sm:h-[80%] sm:w-[30%] z-50 flex justify-center items-center rounded-md backdrop-blur-[4px] border border-white">
+        <div className="h-full w-full mx-5 flex flex-col justify-evenly pb-3">
           <div className=" h-20 w-full flex justify-center items-center font-semibold text-3xl text-[#0B1215]">
             <h1>{loading ? "Loading" : "LOGIN"}</h1>
           </div>
