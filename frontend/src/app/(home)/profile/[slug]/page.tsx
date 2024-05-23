@@ -56,7 +56,7 @@ const Page = () => {
   return (
     <div className="h-screen max-w-screen">
       <div className="flex justify-center items-center h-[100vh] w-screen">
-        <div className="h-[90vh] sm:w-[30%] w-[70%] flex flex-col gap-5 py-5 border-2">
+        <div className="sm:h-[90vh] sm:w-[30%] w-[70%] flex flex-col gap-5 py-5 border-2 h-auto">
           <div className="w-full h-[40%] flex flex-col justify-evenly items-center">
             <div className="sm:size-28 size-20 rounded-full">
               <img
