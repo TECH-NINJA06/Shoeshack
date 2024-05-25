@@ -12,9 +12,9 @@ import { CAROUSEL } from "@/lib/carousalItem";
 
 export function HeroCarousal() {
   return (
-    <div className="sm:h-[70vh] h-[30vh] sm:w-screen //w-[21rem] flex justify-center items-center">
+    <div className="sm:h-[70vh] h-[30vh] sm:w-[90vw]  flex justify-center items-center">
       <Carousel plugins={[Autoplay({delay: 5000})]}>
-        <CarouselContent className="//sm:w-[89vw]">
+        <CarouselContent >
           {CAROUSEL.map((item, index) => (
             <CarouselItem key={index}>
               <div className="flex justify-center items-center bg-red-400 sm:h-[70vh] h-[30vh]">

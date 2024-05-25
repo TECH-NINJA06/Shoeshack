@@ -21,8 +21,8 @@ export function ProductItem({
   productLink,
 }: PageHeadProps) {
   return (
-    <Link className="w-80 min-h-[40rem] flex flex-col items-center justify-center m-auto" href={`/product/${productLink}`}>
-      <div className="w-80 min-h-[40rem]">
+    <Link className="w-80 sm:min-h-[30rem] min-h-[25rem] flex flex-col items-center justify-center m-auto" href={`/product/${productLink}`}>
+      <div className="w-80 sm:min-h-[30rem]">
         <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900 ">
           <div className=" h-[15rem] bg-center object-contain rounded-xl overflow-hidden">
             <img
