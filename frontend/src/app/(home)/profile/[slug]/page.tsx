@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { dbCartUpdate } from "@/lib/redux/features/slices/cart/cartSlice";
+import { getUserProfile } from "@/lib/redux/features/actions/profile.actions";
 // import { dbCartUpdate } from "@/lib/redux/features/slices/cart/cartSlice";
 
 // Define an interface representing the structure of a profile
@@ -42,6 +43,14 @@ const Page = () => {
 
     fetchData();
   }, []);
+
+
+  // useEffect(() => {
+  //   dispatch(getUserProfile());
+  // }, []);
+
+
+
 
   const handleLogout = async () => {
     try {
