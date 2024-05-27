@@ -164,12 +164,12 @@ function Page() {
   return (
     <div className="size-full">
       <Navbar />
-      <div className="w-full h-[90vh] px-20 text-white flex justify-center items-center">
-        <div className="h-full w-[60%] border-r border-white flex flex-col justify-center items-center px-10">
+      <div className="w-full h-[90vh] px-20 text-white flex sm:flex-row flex-col justify-center items-center sm:overflow-y-hidden overflow-y-scroll">
+        <div className="sm:h-full h-[50%] sm:w-[60%] w-screen sm:border-r sm:border-white flex flex-col justify-center items-center sm:px-10">
           <div className="w-full h-20 flex items-center border-b border-white">
-            <h1 className="font-semibold text-xl">Shopping Cart</h1>
+            <h1 className="font-semibold text-xl text-center">Shopping Cart</h1>
           </div>
-          <div className="w-full h-20 flex justify-end gap-10 items-center border-b border-white pr-14">
+          <div className="sm:w-full w-screen h-20 flex justify-end sm:gap-10 gap-5 items-center border-b border-white pr-14">
             <p className="text-slate-300">Product</p>
             <p className="text-slate-300">Size</p>
             <p className="text-slate-300">Quantity</p>
@@ -217,9 +217,9 @@ function Page() {
             })}
           </div>
         </div>
-        <div className="h-full w-[40%] flex flex-col justify-center items-center px-10">
+        <div className="sm:h-full h-[40%] sm:w-[40%] w-full flex flex-col justify-center sm:items-center sm:px-10 sm:gap-0 gap-2">
           <div className="w-full h-20 flex items-center border-b border-white">
-            <h1 className="font-semibold text-xl">Cart Total</h1>
+            <h1 className="font-semibold sm:text-xl">Cart Total</h1>
           </div>
           <div className="w-full h-20 flex justify-between items-center border-b border-white">
             <h4>SubTotal</h4>
@@ -235,7 +235,7 @@ function Page() {
           </div>
           <button
             onClick={handleCheckout}
-            className="w-full h-14 rounded flex justify-between items-center mt-20 bg-white"
+            className="w-full h-14 rounded flex justify-between items-center sm:mt-20 mt-7 bg-white"
           >
             <div className="size-full flex items-center justify-center text-[#0B1215] font-semibold">
               Proceed to Checkout
