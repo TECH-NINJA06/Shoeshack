@@ -162,7 +162,7 @@ function Page() {
   }
 
   return (
-    <div className="size-full">
+    <div className="">
       <Navbar />
       <div className="w-full h-[90vh] px-20 text-white flex sm:flex-row flex-col justify-center items-center sm:overflow-y-hidden overflow-y-scroll">
         <div className="sm:h-full h-[50%] sm:w-[60%] w-screen sm:border-r sm:border-white flex flex-col justify-center items-center sm:px-10">

@@ -36,7 +36,6 @@ const Navbar = () => {
   const [gAvatar, setGAvatar] = useState(null);
   const [cartItemLength, setCartItemLength] = useState(0);
 
-
   useEffect(() => {
     (async () => {
       try {
@@ -54,22 +53,21 @@ const Navbar = () => {
       }
     })();
   }, []);
-    //Redux cart update
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get("/api/cart");
-          console.log("Redux Cart updated", response.data);
-          dispatch(dbCartUpdate(response.data.cart))
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  const cartItems = useSelector((state: RootState) => state.cartItems);
+  //Redux cart update
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/cart");
+        console.log("Redux Cart updated", response.data);
+        dispatch(dbCartUpdate(response.data.cart));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
+  const cartItems = useSelector((state: RootState) => state.cartItems);
 
   const handleSearch = () => {
     console.log(search);
@@ -83,8 +81,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="h-20 w-screen border-b">
-      <div className="h-full w-full bg-[#0B1215] flex justify-evenly items-center">
+    <div className="h-32 sm:h-20 w-screen border-b overflow-y-scroll flex flex-col justify-center items-center">
+      <div className="h-20 w-full bg-[#0B1215] flex justify-evenly items-center">
         <Link
           href={"/home"}
           className="w-52 h-11 justify-start items-start overflow-hidden"
@@ -93,7 +91,7 @@ const Navbar = () => {
             <img src="/logoImage.jpg" alt="logo" className="size-full" />
           </div>
         </Link>
-        <div className="h-full w-[70%] flex items-center">
+        <div className="h-full w-[70%] sm:flex hidden items-center">
           <div className="w-[50%] flex h-15 rounded justify-center items-center mx-20">
             <div className="w-full text-base border h-9 flex items-center rounded-r bg-[#0B1215] text-white">
               <input
@@ -108,31 +106,44 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <div className="h-full w-28 flex justify-end items-end">
+        <div className="h-full sm:w-28 flex justify-end items-end sm:pr-0 pr-2">
           <div className="h-full w-full flex justify-center items-center gap-3 text-white">
-            <Link href="/cart" className="size-full">
-              <div className="h-[90%] w-full flex justify-center items-center pt-3">
+            <Link href="/cart" className="sm:size-full h-full w-5">
+              <div className="h-[90%] sm:w-full w-9 flex justify-center items-center pt-3">
                 <IoCartOutline className="size-[80%]" />
-                <span>
-                {cartItems.length}
-                </span>
+                <span>{cartItems.length}</span>
               </div>
             </Link>
             <Link
               href={`/profile/${profile?.id}`}
-              className="h-14 w-28 rounded-full"
+              className="sm:h-14 sm:w-28 h-9 w-9 rounded-full"
             >
               <div
                 className="size-full rounded-full bg-center bg-no-repeat bg-cover"
                 style={{
                   backgroundImage: `url(${
-                    profile && gAvatar
-                      ? gAvatar
-                      : "/navAvatar.jpg"
+                    profile && gAvatar ? gAvatar : "/navAvatar.jpg"
                   })`,
                 }}
               ></div>
             </Link>
+          </div>
+        </div>
+      </div>
+      <div className="sm:hidden w-full h-10">
+        <div className="h-full w-full flex items-center pl-6">
+          <div className="w-[90%] flex h-15 border rounded-md justify-center items-center">
+            <div className="w-full text-base h-9 flex items-center rounded-md bg-[#0B1215] text-white">
+              <input
+                placeholder="  Search ShoeShack"
+                className="w-full text-base bg-[#0B1215] text-white border-none h-[90%]"
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={handleInputKeyDown}
+              />
+            </div>
+            <div className="search-icon w-9 h-9 rounded-full ml-2 flex justify-center items-center">
+              <FaSearch className="text-white " onClick={handleSearch} />
+            </div>
           </div>
         </div>
       </div>
