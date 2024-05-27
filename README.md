@@ -27,7 +27,7 @@ ShoeShack is a modern and responsive e-commerce web application built with Next.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ShoeShack.git
+   git clone https://github.com/TECH-NINJA06/ShoeShack.git
    cd ShoeShack/frontend
 2. Install dependencies:
    ```bash
