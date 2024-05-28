@@ -81,19 +81,19 @@ const Navbar = () => {
   };
 
   return (
-    <div className="h-32 sm:h-20 w-screen border-b overflow-y-scroll flex flex-col justify-center items-center">
-      <div className="h-20 w-full bg-[#0B1215] flex justify-evenly items-center">
+    <div className="h-32 sm:h-20 w-screen border-b overflow-y-scroll sm:overflow-y-hidden flex flex-col justify-center items-center bg-black">
+      <div className="h-20 w-full flex justify-evenly items-center">
         <Link
           href={"/home"}
-          className="w-52 h-11 justify-start items-start overflow-hidden"
+          className="sm:w-52 w-40 h-11 flex justify-start items-center overflow-hidden"
         >
-          <div className="w-52 h-11 justify-start items-start overflow-hidden">
+          <div className="sm:w-52 w-40 h-6 sm:h-11 overflow-hidden">
             <img src="/logoImage.jpg" alt="logo" className="size-full" />
           </div>
         </Link>
         <div className="h-full w-[70%] sm:flex hidden items-center">
-          <div className="w-[50%] flex h-15 rounded justify-center items-center mx-20">
-            <div className="w-full text-base border h-9 flex items-center rounded-r bg-[#0B1215] text-white">
+          <div className="w-[50%] flex h-15 border rounded justify-center items-center mx-20 bg-[#0B1215]">
+            <div className="w-full text-base h-9 flex items-center rounded-r bg-[#0B1215] text-white">
               <input
                 placeholder="  Search ShoeShack"
                 className="w-full text-base bg-[#0B1215] text-white border-none h-full"
@@ -101,14 +101,14 @@ const Navbar = () => {
                 onKeyDown={handleInputKeyDown}
               />
             </div>
-            <div className="search-icon w-14 h-9 rounded-full bg-red-500 ml-2 flex justify-center items-center">
+            <div className="search-icon w-14 h-9 rounded-full ml-2 flex justify-center items-center">
               <FaSearch className="text-white " onClick={handleSearch} />
             </div>
           </div>
         </div>
         <div className="h-full sm:w-28 flex justify-end items-end sm:pr-0 pr-2">
           <div className="h-full w-full flex justify-center items-center gap-3 text-white">
-            <Link href="/cart" className="sm:size-full h-full w-5">
+            <Link href="/cart" className="sm:size-full h-full w-10">
               <div className="h-[90%] sm:w-full w-9 flex justify-center items-center pt-3">
                 <IoCartOutline className="size-[80%]" />
                 <span>{cartItems.length}</span>
@@ -132,7 +132,7 @@ const Navbar = () => {
       </div>
       <div className="sm:hidden w-full h-10">
         <div className="h-full w-full flex items-center pl-6">
-          <div className="w-[90%] flex h-15 border rounded-md justify-center items-center">
+          <div className="w-[90%] flex h-15 border rounded-md justify-center items-center bg-[#0B1215]">
             <div className="w-full text-base h-9 flex items-center rounded-md bg-[#0B1215] text-white">
               <input
                 placeholder="  Search ShoeShack"
@@ -141,7 +141,7 @@ const Navbar = () => {
                 onKeyDown={handleInputKeyDown}
               />
             </div>
-            <div className="search-icon w-9 h-9 rounded-full ml-2 flex justify-center items-center">
+            <div className="search-icon w-9 h-9 rounded-full ml-2 flex justify-center items-center bg-[#0B1215]">
               <FaSearch className="text-white " onClick={handleSearch} />
             </div>
           </div>
