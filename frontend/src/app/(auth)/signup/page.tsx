@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-function LoginPage() {
+function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -115,4 +115,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SignupPage;
