@@ -31,7 +31,7 @@ function LoginPage() {
         const id = data.id;
         const fullname = data.fullName;
         toast.success("Login successful");
-        router.push(`/profile/${id}`);
+        router.push(`/home`);
         setLoading(false);
       }
     } catch (error) {
