@@ -47,49 +47,50 @@ function LoginPage() {
   };
 
   return (
-    <div className=" h-[100vh] w-[100vw] relative">
-      <img
-        src="./authBG.jpg"
-        alt="bgimage"
-        className="h-full -z-50 grayscale w-full"
-      />
-      <div className=" h-[92%] w-[30%] z-50  flex justify-center items-center absolute top-[5%] left-[35%] rounded-md backdrop-blur-[4px] border border-white">
-        <div className="h-full w-full mx-5 flex flex-col justify-evenly">
-          <div className=" h-20 w-full flex justify-center items-center font-semibold text-3xl text-[#0B1215]">
-            <h1>{loading ? "Loading" : "Register"}</h1>
+    <div
+      className="max-h-screen h-screen w-screen flex justify-center items-center bg-center bg-cover bg-no-repeat"
+      style={{
+        backgroundImage: `url("./authBG.jpg")`,
+        filter: "grayscale(100%)",
+      }}
+    >
+      <div className="sm:h-[80%] sm:w-[30%] z-50 flex justify-center items-center rounded-md backdrop-blur-[4px] border border-white">
+        <div className="h-full w-full mx-5 flex flex-col justify-evenly pb-3">
+          <div className="h-20 w-full flex justify-center items-center font-semibold text-3xl text-[#0B1215]">
+            <h1>{loading ? "Loading" : "SIGNUP"}</h1>
           </div>
-          <div className="h-[80%] w-full bg-white rounded">
-            <div className="flex items-center flex-col gap-5 mt-7 justify-between">
+          <div className="h-[75%] w-full bg-white rounded py-4 sm:py-0">
+            <div className="flex items-center flex-col sm:mt-7 justify-between">
               <div className="flex flex-col justify-center">
                 <h6 className="text-black font-bold">Full Name: </h6>
                 <input
                   type="text"
-                  name="email"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border h-8"
-                  placeholder="Enter your name"
+                  name="username"
+                  className="rounded-r-md bg-transparent text-black placeholder:text-black border"
+                  placeholder="Enter your Name"
                   onChange={(e) => {
                     setFullName(e.target.value);
                   }}
                 />
               </div>
-              <div className="flex justify-center flex-col">
+              <div className="flex flex-col justify-center mt-7">
                 <h6 className="text-black font-bold">Email: </h6>
                 <input
                   type="text"
                   name="email"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border h-8"
+                  className="rounded-r-md bg-transparent text-black placeholder:text-black border"
                   placeholder="Enter your Email"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
               </div>
-              <div className="flex justify-center flex-col gap-1 mb-10">
-                <h6 className="text-black font-bold ">Password: </h6>
+              <div className="flex flex-col justify-center gap-1 mt-7 mb-10">
+                <h6 className="text-black font-bold">Password: </h6>
                 <input
                   type="password"
                   name="password"
-                  className=" rounded-r-md bg-transparent text-black placeholder:text-black border h-8"
+                  className="rounded-r-md bg-transparent text-black placeholder:text-black border"
                   placeholder="Enter your Password"
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -101,25 +102,9 @@ function LoginPage() {
                   Signup
                 </button>
               </div>
-              {/* <div className="h-10 w-40 bg-[#0B1215] flex justify-center items-center rounded-md mt-10">
-                <button
-                  className="h-full w-full border flex justify-center items-center gap-1  border-slate-700 rounded-lg text-white hover:border-slate-500 hover:text-slate-300 hover:shadow transition duration-150"
-                  onClick={() => signIn("google")}
-                >
-                  <img
-                    className="w-6 h-6"
-                    src="https://www.svgrepo.com/show/475656/google-color.svg"
-                    loading="lazy"
-                    alt="google logo"
-                  />
-                  <span className="font-medium text-sm justify-center text-white">
-                    Login with Google
-                  </span>
-                </button>
-              </div> */}
               <div className="h-10 w-full flex justify-center items-center mt-10 text-black">
-                <p className=" text-[#0B1215]">
-                  Already a User? <Link href="/login">Login</Link>
+                <p className="text-[#0B1215]">
+                  Already have an account? <Link href="/login">Login</Link>
                 </p>
               </div>
             </div>
