@@ -46,7 +46,7 @@ function Page({ params }: { params: { slug: string } }) {
         <h1 className="text-2xl font-bold border-b mx-5">
           Search results for: {slug}
         </h1>
-        <div className="w-full grid grid-cols-1 px-10 mt-5 md:grid lg:grid-cols-3 md:grid-cols-2 sm:flex sm:flex-col sm:justify-center sm:items-center">
+        <div className="w-full px-10 mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {results?.map((product) => {
             const productTitle = product ? product?.title : "";
             const truncatedTitle =
@@ -54,19 +54,22 @@ function Page({ params }: { params: { slug: string } }) {
                 ? productTitle.substring(0, 20) + "..."
                 : productTitle;
             return (
-              <ProductItem
+              <div
+                className="flex justify-center items-center sm:w-full"
                 key={product?.title}
-                title={truncatedTitle}
-                desc={product?.category}
-                brand={product?.brand}
-                image={product?.images}
-                productLink={product._id}
-              />
+              >
+                <ProductItem
+                  title={truncatedTitle}
+                  desc={product?.category}
+                  brand={product?.brand}
+                  image={product?.images}
+                  productLink={product._id}
+                />
+              </div>
             );
           })}
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
