@@ -77,6 +77,34 @@
 
 html, body {
   width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: #0B1215;
+}
+
+/* For WebKit (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* For Firefox */
+/* Note: Firefox currently does not support styling scrollbar track */
+/* You can only style the scrollbar thumb */
+/* Other properties like width or color may not work in Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #000 #1c282b;
+  scroll-behavior: smooth;
 }

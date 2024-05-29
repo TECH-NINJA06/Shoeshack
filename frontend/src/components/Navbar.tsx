@@ -81,7 +81,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="h-32 sm:h-20 w-screen border-b overflow-y-scroll sm:overflow-y-hidden flex flex-col justify-center items-center bg-black">
+    <div className="h-32 sm:h-20 w-screen border-b sm:overflow-y-hidden flex flex-col justify-center items-center bg-black">
       <div className="h-20 w-full flex justify-evenly items-center">
         <Link
           href={"/home"}
@@ -96,7 +96,7 @@ const Navbar = () => {
             <div className="w-full text-base h-9 flex items-center rounded-r bg-[#0B1215] text-white">
               <input
                 placeholder="  Search ShoeShack"
-                className="w-full text-base bg-[#0B1215] text-white border-none h-full"
+                className="w-full text-base bg-[#0B1215] text-white border-none h-full focus:outline-none pl-2"
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={handleInputKeyDown}
               />

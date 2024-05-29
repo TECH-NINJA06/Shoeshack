@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ProductItem } from "../../../components/Search/Product";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 // import { Provider } from "react-redux";
 // import { store } from "@/lib/redux/store";
 
@@ -17,10 +18,9 @@ interface Product {
 
 function Page({ params }: { params: { slug: string } }) {
   const [results, setResults] = useState<Product[]>([]);
- 
-  const result = params.slug;
-  let slug = params.slug.replace("%20", " ")
 
+  const result = params.slug;
+  let slug = params.slug.replace("%20", " ");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -37,20 +37,22 @@ function Page({ params }: { params: { slug: string } }) {
     fetchProduct();
   }, [params.slug]);
   return (
-      <div className="text-white">
-        <Navbar />
-        <div className="mt-7 flex flex-col gap-5">
-          <Link href={"/home"} className="mx-2">&#8592; Back To Home</Link>
-        <h1 className="text-2xl font-bold border-b mx-5">Search results for: {slug}</h1>
-        <div className="w-full h-auto grid grid-cols-1 px-10 mt-5 md:grid lg:grid-cols-3 md:grid-cols-2 sm:flex sm:flex-col sm:justify-center sm:items-center">
+    <div className="text-white w-screen">
+      <Navbar />
+      <div className="mt-7 flex flex-col gap-5">
+        <Link href={"/home"} className="mx-2">
+          &#8592; Back To Home
+        </Link>
+        <h1 className="text-2xl font-bold border-b mx-5">
+          Search results for: {slug}
+        </h1>
+        <div className="w-full grid grid-cols-1 px-10 mt-5 md:grid lg:grid-cols-3 md:grid-cols-2 sm:flex sm:flex-col sm:justify-center sm:items-center">
           {results?.map((product) => {
-            const productTitle = product
-            ? product?.title
-            : '';
-          const truncatedTitle =
-            productTitle.length > 20
-              ? productTitle.substring(0, 20) + "..."
-              : productTitle;
+            const productTitle = product ? product?.title : "";
+            const truncatedTitle =
+              productTitle.length > 20
+                ? productTitle.substring(0, 20) + "..."
+                : productTitle;
             return (
               <ProductItem
                 key={product?.title}
@@ -63,9 +65,9 @@ function Page({ params }: { params: { slug: string } }) {
             );
           })}
         </div>
-        </div>
-        
       </div>
+      <Footer />
+    </div>
   );
 }
 
