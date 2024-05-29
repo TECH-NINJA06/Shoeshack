@@ -164,19 +164,20 @@ function Page() {
   return (
     <div className="">
       <Navbar />
-      <div className="w-full h-[90vh] px-20 text-white flex sm:flex-row flex-col justify-center items-center sm:overflow-y-hidden overflow-y-scroll">
-        <div className="sm:h-full h-[50%] sm:w-[60%] w-screen sm:border-r sm:border-white flex flex-col justify-center items-center sm:px-10">
-          <div className="w-full h-20 flex items-center border-b border-white">
+      <div className="w-full sm:h-[90vh] sm:px-20 text-white flex sm:flex-row flex-col justify-center items-center sm:overflow-y-hidden overflow-y-scroll">
+        <div className="sm:h-full h-[100%] sm:w-[60%] w-screen sm:border-r sm:border-white flex flex-col justify-center items-center sm:px-10">
+          <div className="w-full h-20 flex items-center border-b border-white sm:pl-0 pl-3">
             <h1 className="font-semibold text-xl text-center">Shopping Cart</h1>
           </div>
-          <div className="sm:w-full w-screen h-20 flex justify-end sm:gap-10 gap-5 items-center border-b border-white pr-14">
+          <div className="sm:w-full w-screen h-20 flex justify-end sm:gap-10 gap-5 items-center border-b border-white sm:pr-14 pr-2">
             <p className="text-slate-300">Product</p>
             <p className="text-slate-300">Size</p>
             <p className="text-slate-300">Quantity</p>
             <p className="text-slate-300">SubTotal</p>
           </div>
-          <div className="w-full h-72 overflow-y-scroll flex flex-col items-center border-b border-white pr-10 my-5 gap-2">
+          <div className="sm:w-full w-screen h-72 overflow-y-scroll flex flex-col items-center border-b border-white sm:pr-10 my-5 gap-2">
             {updatedCartItems.map((cartItem) => {
+
               const productTitle = cartItem.productDetails
                 ? cartItem.productDetails.title
                 : '';
@@ -184,40 +185,50 @@ function Page() {
                 productTitle.length > 8
                   ? productTitle.substring(0, 8) + "..."
                   : productTitle;
-              return (
+              
+              const subtotal = cartItem.productDetails ? cartItem.productDetails.price*cartItem.quantity : 0
+                  return (
                 <div
-                  className="w-full h-[45%] flex gap-4 items-center justify-between border-b"
+                  className="w-full h-[45%] flex sm:gap-8 gap-4 items-center justify-between sm:justify-normal border-b"
                   key={cartItem._id}
                 >
-                  <div className="h-full w-[40%]  flex gap-16 items-center px-2">
-                    <button onClick={() => handleDeleteCart(cartItem?.productDetails?._id || '', cartItem.size)}>
+                  <div className="h-full sm:w-[40%] w-28 flex sm:gap-16 gap-4 items-center px-2">
+                    <button onClick={() => handleDeleteCart(cartItem?.productDetails?._id || '', cartItem.size)} className="sm:w-auto w-4">
                       <RiDeleteBin5Line className="text-white" />
                     </button>
                     <Link
                       href={`/product/${cartItem.productDetails?._id}`}
-                      className="h-[95%] w-52 flex justify-center items-center"
+                      className="h-[95%] w-20 flex justify-center items-center"
                     >
                       <div className="h-[95%] w-full flex justify-center items-center overflow-hidden">
                         <img
                           src={cartItem.productDetails?.images}
                           alt="item_Img"
-                          className="size-full max-h-full"
+                          className="sm:size-full size-auto max-h-full"
                         />
                       </div>
                     </Link>
                   </div>
-                  <div className="h-full w-[53%] flex items-center gap-2">
-                    <p>{truncatedTitle}</p>
-                    <p className="pl-10">{cartItem.size}</p>
-                    <p className="px-16">{cartItem.quantity}</p>
-                    <p className="pl-4">{cartItem.productDetails?.price}</p>
+                  <div className="h-full w-[80%] sm:w-[52%] flex items-center gap-5 sm:gap-10">
+                    <div className='sm:flex hidden w-20 justify-center items-center'>
+                    <p className="text-center">{truncatedTitle}</p>
+                    </div>
+                    <div className="w-9 flex justify-center items-center">
+                    <p>{cartItem.size}</p>
+                    </div>
+                    <div className="w-16 flex justify-center items-center">
+                    <p>{cartItem.quantity}</p>
+                    </div>
+                    <div className="w-16 flex justify-center items-center">
+                    <p>{subtotal}</p>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
         </div>
-        <div className="sm:h-full h-[40%] sm:w-[40%] w-full flex flex-col justify-center sm:items-center sm:px-10 sm:gap-0 gap-2">
+        <div className="sm:h-full h-[100%] sm:w-[40%] w-full sm:mb-0 mb-10 flex flex-col justify-center sm:items-center sm:px-10 sm:gap-0 gap-2 px-5">
           <div className="w-full h-20 flex items-center border-b border-white">
             <h1 className="font-semibold sm:text-xl">Cart Total</h1>
           </div>
