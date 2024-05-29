@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <div className="flex justify-center items-center w-screen overflow-x-hidden overflow-y-visible">
+      <div className="flex justify-center items-center w-screen overflow-x-hidden">
         <div className="h-[90vh] w-full">
           <div className="w-full flex justify-center items-center mt-5">
             <HeroCarousal />
