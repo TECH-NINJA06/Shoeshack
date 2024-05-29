@@ -157,10 +157,13 @@ const Page = ({ params }: { params: { slug: string } }) => {
   
 
   return (
-    <div className="h-screen w-screen bg-slate-100 bg-center flex flex-col justify-center items-center">
-      <div className=" w-[90%] h-[80%] bg-white rounded-lg grayscale-0">
-        <div className="flex justify-center items-center gap-10 h-full w-full">
-          <div className="flex flex-col justify-center w-[45%] h-full text-black">
+    <div className="h-screen w-screen bg-slate-100 bg-center flex flex-col justify-center items-center gap-5">
+      <div className="w-full px-20 sm:flex hidden">
+        <Link href={'/home'} className="font-semibold">&#8592; Back to home</Link>
+      </div>     
+      <div className="w-[90%] h-[90%] bg-white rounded-lg grayscale-0">
+        <div className="flex sm:flex-row flex-col justify-center items-center sm:gap-10 gap-4 h-full w-full">
+          <div className="flex flex-col justify-center sm:w-[45%] sm:h-full w-full h-[30%] text-black">
             <div className="h-[65%] w-full flex justify-center items-center">
               <img
                 src={product?.images}
@@ -169,23 +172,23 @@ const Page = ({ params }: { params: { slug: string } }) => {
               />
             </div>
           </div>
-          <div className="flex flex-col w-[40%] min-h-full items-center justify-evenly overflow-hidden ">
+          <div className="flex flex-col sm:w-[40%] sm:min-h-full items-center justify-evenly overflow-hidden ">
             {product && (
-              <div className="flex flex-col gap-5">
-                <h2 className="text-center text-slate-700 font-bold">
+              <div className="flex flex-col sm:gap-5 gap-2">
+                <h2 className="text-center text-slate-700 font-bold sm:text-base text-sm">
                   {product.brand}
                 </h2>
-                <h1 className="text-[#0B1215] font-bold text-2xl text-center">
+                <h1 className="text-[#0B1215] font-bold sm:text-2xl text-lg text-center">
                   {product.title}
                 </h1>
-                <p className="text-slate-500 font-bold text-4xl text-center leading-[7.5rem] underline">
+                <p className="text-slate-500 font-bold sm:text-4xl text-2xl text-center sm:leading-[7.5rem] underline">
                   ₹ {product.price}
                 </p>
                 <p className="text-center text-slate-700 font-bold">
                   color: {product.color}, category: {product.category}
                 </p>
                 <div id="productSize" className="mx-2">
-                  <h2 className="text-[#0B1215] font-bold text-xl text-center">
+                  <h2 className="text-[#0B1215] font-bold sm:text-xl text-base text-center">
                     Select Size
                   </h2>
                   <div className="flex gap-7 items-center mt-5 justify-center">
