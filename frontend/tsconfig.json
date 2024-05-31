@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/product/[slug]/route.ts", "src/app/api/search/[slug]/route.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/product/[slug]/route.ts", "src/app/api/search/[slug]/route.ts", "src/helpers/clientProviders.jsx", "src/app/layout.tsx", "src/helpers/clientOnly.js"],
   "exclude": ["node_modules"]
 }
